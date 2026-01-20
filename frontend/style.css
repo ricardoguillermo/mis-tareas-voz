@@ -1,0 +1,139 @@
+/* Diseño Minimalista y Táctil */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 { color: #2c3e50; }
+
+/* Botón de Micrófono Gigante */
+#btn-voz {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.2rem;
+    border-radius: 50px; /* Forma de píldora */
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+}
+
+#btn-voz:active { transform: scale(0.95); }
+
+/* Input elegante */
+#tarea-texto {
+    width: 100%;
+    max-width: 300px;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+/* Lista de Tareas */
+#lista-tareas {
+    width: 100%;
+    max-width: 400px;
+    list-style: none;
+    padding: 0;
+    margin-top: 30px;
+}
+
+#lista-tareas li {
+    background: white;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+#lista-tareas li input[type="checkbox"] {
+    margin-right: 15px;
+    transform: scale(1.5); /* Checkbox más grande para el dedo */
+}
+
+/* Variables de color para facilitar cambios luego */
+:root {
+    --primario: #3498db;    /* Azul para el botón */
+    --exito: #27ae60;      /* Verde para tareas completadas */
+    --texto: #2c3e50;      /* Gris oscuro para lectura */
+    --fondo: #f8f9fa;      /* Gris muy claro para el fondo */
+    --blanco: #ffffff;
+}
+
+body {
+    background-color: var(--fondo);
+    color: var(--texto);
+}
+
+/* Efecto visual para tareas completadas */
+.tarea-item {
+    transition: all 0.3s ease;
+    border-left: 5px solid var(--primario); /* Borde azul por defecto */
+}
+
+.tarea-item.completada {
+    border-left: 5px solid var(--exito); /* Cambia a verde al completar */
+    background-color: #f0fff4; /* Un toque de verde muy suave al fondo */
+    opacity: 0.8;
+}
+
+/* Estilo para el texto de la nota */
+.nota-texto {
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+textarea {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    height: 60px;
+}
+
+.btn-principal {
+    background-color: #27ae60;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 320px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.calendario-seccion {
+    background: #ebf5fb;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+}
+
+#filtro-fecha {
+    padding: 10px;
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 5px;
+    width: 90%;
+}

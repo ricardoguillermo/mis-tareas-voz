@@ -1,0 +1,32 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Mi Lista de Tareas Pro</title>
+</head>
+<body>
+    <div class="container">
+    <h1>🎙️ Mis Tareas</h1>
+    
+    <div class="input-section">
+        <button id="btn-voz">🎤 Tocar para Dictar</button>
+        
+        <input type="text" id="tarea-titulo" placeholder="Título de la tarea...">
+        
+        <textarea id="tarea-notas" placeholder="Añadir notas o detalles..."></textarea>
+        
+        <button id="btn-guardar" class="btn-principal">💾 Guardar Tarea</button>
+    </div>
+<div class="calendario-seccion">
+    <label for="filtro-fecha">📅 Ver tareas del día:</label>
+    <input type="date" id="filtro-fecha">
+</div>
+    <div id="contenedor-lista">
+        <h2>Pendientes</h2>
+        <ul id="lista-tareas"></ul>
+    </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
