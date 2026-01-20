@@ -14,7 +14,7 @@ document.getElementById("filtro-fecha").onchange = obtenerTareas;
 //https://maximus-inert-edgily.ngrok-free.dev
 // Pega aquí la dirección que acabas de copiar de la terminal del puerto 3000
 // const urlBase = 'https://maximus-inert-edgily.ngrok-free.app/tareas';
-const urlBase = "http://localhost:3000/tareas";
+const urlBase = "https://mis-tareas-voz.onrender.com/tareas";
 
 async function guardarTareaEnNube(texto) {
     try {
