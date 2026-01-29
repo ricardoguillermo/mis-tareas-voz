@@ -1,0 +1,244 @@
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Mi Lista de Tareas Pro</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎙️ Mis Tareas</h1>
+      <div id="panel-tablet" class="grid-container">
+        <button class="boton-gigante" onclick="mostrarSeccion('tareas')">
+          <span>📝</span>
+          <p>Hacer Juntos</p>
+        </button>
+
+        <button class="boton-gigante" onclick="mostrarSeccion('familia')">
+          <span>❤️</span>
+          <p>Familia</p>
+        </button>
+
+        <button class="boton-gigante" onclick="mostrarSeccion('musica')">
+          <span>📻</span>
+          <p>Música</p>
+        </button>
+
+        <button
+          class="boton-gigante"
+          onclick="window.location.href = 'https://sonido-animal.onrender.com/'"
+        >
+          <span>🐶</span>
+          <p>Animales</p>
+        </button>
+      </div>
+
+      <div
+        id="seccion-editor"
+        class="input-section"
+        style="
+          display: none;
+          border: 2px dashed #3498db;
+          padding: 10px;
+          margin-bottom: 20px;
+          border-radius: 15px;
+        "
+      >
+        <h3>✍️ Agregar Nueva Actividad</h3>
+        <input
+          type="text"
+          id="tarea-titulo"
+          placeholder="¿Qué haremos juntos?"
+        />
+        <textarea id="tarea-notas" placeholder="Notas..."></textarea>
+        <button id="btn-voz">🎤 Dictar</button>
+        <button id="btn-guardar" class="btn-principal">💾 Guardar</button>
+      </div>
+
+      <button
+        onclick="pedirClave()"
+        style="
+          background: none;
+          border: none;
+          color: #bdc3c7;
+          font-size: 0.8rem;
+          cursor: pointer;
+        "
+      >
+        ⚙️ Administrar tareas
+      </button>
+      <div class="calendario-seccion">
+        <label for="filtro-fecha">📅 Ver tareas del día:</label>
+        <input type="date" id="filtro-fecha" />
+      </div>
+      <div id="contenedor-lista" style="display: none">
+        <button
+          onclick="volverAlMenu()"
+          style="
+            background: #e74c3c;
+            color: white;
+            padding: 20px;
+            width: 100%;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+          "
+        >
+          ⬅️ Volver al Menú
+        </button>
+        <h2>Nuestras Actividades</h2>
+        <ul id="lista-tareas"></ul>
+      </div>
+      <div id="seccion-familia" style="display: none">
+        <button onclick="volverAlMenu()" class="btn-volver">⬅️ Volver</button>
+        <h2 style="text-align: center; font-size: 2.2rem; color: #2c3e50">
+          Nuestra Familia ❤️
+        </h2>
+
+        <div class="grid-familia">
+          <div class="familiar-card">
+            <img
+              src="fotos/guillermo.jpg"
+              onclick="hablar('Él es tu hijo Guillermo')"
+            />
+            <p>Guillermo</p>
+            <button class="btn-audio" onclick="reproducirAudio('guillermo')">
+              🔊 Escuchar a Guille
+            </button>
+          </div>
+          <div class="familiar-card">
+            <img
+              src="fotos/agustina.jpg"
+              onclick="hablar('Ella es Agustina, esposa de Guillermo')"
+            />
+            <p>Agustina</p>
+            <button class="btn-audio" onclick="reproducirAudio('agustina')">
+              🔊 Escuchar a Agus
+            </button>
+          </div>
+          <div class="familiar-card">
+            <img
+              src="fotos/brunita.jpg"
+              onclick="hablar('Ella es tu nieta Brunita')"
+            />
+            <p>Brunita</p>
+            <button class="btn-audio" onclick="reproducirAudio('brunita')">
+              🔊 Escuchar a Bruni
+            </button>
+          </div>
+          <div class="familiar-card">
+            <img
+              src="fotos/Thiaguito.jpg"
+              onclick="hablar('Él es tu nieto Thiaguito')"
+            />
+            <p>Thiaguito</p>
+            <button class="btn-audio" onclick="reproducirAudio('Thiaguito')">
+              🔊 Escuchar a Thiago
+            </button>
+          </div>
+
+          <div class="familiar-card">
+            <img
+              src="fotos/diana.jpg"
+              onclick="hablar('Ella es tu hija Diana')"
+            />
+            <p>Diana</p>
+            <button class="btn-audio" onclick="reproducirAudio('diana')">
+              🔊 Escuchar a Diana
+            </button>
+          </div>
+          <div class="familiar-card">
+            <img
+              src="fotos/arturo.jpg"
+              onclick="hablar('Él es Arturo, esposo de Diana')"
+            />
+            <p>Arturo</p>
+            <button class="btn-audio" onclick="reproducirAudio('arturo')">
+              🔊 Escuchar a Arturo
+            </button>
+          </div>
+          <div class="familiar-card">
+            <img
+              src="fotos/maximo.jpg"
+              onclick="hablar('Él es tu nieto Máximo')"
+            />
+            <p>Máximo</p>
+            <button class="btn-audio" onclick="reproducirAudio('maximo')">
+              🔊 Escuchar a Máximo
+            </button>
+          </div>
+          <div class="familiar-card">
+            <img
+              src="fotos/anibal.png"
+              onclick="hablar('Él es tu hijo Aníbal')"
+            />
+            <p>Aníbal</p>
+            <button class="btn-audio" onclick="reproducirAudio('anibal')">
+              🔊 Escuchar a Aníbal
+            </button>
+          </div>
+          <div class="familiar-card">
+            <img
+              src="fotos/valentina.jpg"
+              onclick="hablar('Ella es Valentina, la novia de Aníbal')"
+            />
+            <p>Valentina</p>
+            <button class="btn-audio" onclick="reproducirAudio('valentina')">
+              🔊 Escuchar a Valen
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="seccion-musica" style="display: none;">
+      <div class="header-musica">
+          <button onclick="volverAlMenu()" class="btn-volver-simple">⬅️ Volver</button>
+          <h2>Elegir Radio 📻</h2>
+      </div>
+
+    <div class="grid-musica-nueva">
+        <div class="card-radio">
+            <div class="info-radio">
+                <span class="emoji-radio">🎙️</span>
+                <div>
+                    <h3>Radio Sarandí</h3>
+                    <p>Noticias y charlas</p>
+                </div>
+            </div>
+            <button class="btn-enlace" onclick="abrirRadio('https://www.sarandi690.com.uy/')">
+                ▶️ ESCUCHAR
+            </button>
+        </div>
+
+        <div class="card-radio">
+            <div class="info-radio">
+                <span class="emoji-radio">🌊</span>
+                <div>
+                    <h3>Azul FM</h3>
+                    <p>Música para disfrutar</p>
+                </div>
+            </div>
+            <button class="btn-enlace" onclick="abrirRadio('https://azulfm.com.uy/envivo')">
+                ▶️ ESCUCHAR
+            </button>
+        </div>
+        
+        <div class="card-radio">
+            <div class="info-radio">
+                <span class="emoji-radio">🎸</span>
+                <div>
+                    <h3>Radio Clarín</h3>
+                    <p>Música típica y tango</p>
+                </div>
+            </div>
+            <button class="btn-enlace" onclick="abrirRadio('https://vader.shoutca.st/proxy/radioclarin?mp=/stream')">
+                ▶️ ESCUCHAR
+            </button>
+        </div>
+    </div>
+</div>
+
+    
+
+    <script src="app.js"></script>
+  </body>
+</html>
