@@ -26,12 +26,10 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 
 
 
-// Cambiamos '*' por '(.*)' que es el nuevo formato para atrapar todo
-app.get('(.*)', (req, res) => {
+// En Express 5, los parámetros con asterisco deben tener nombre
+app.get('/:any*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
 });
-
-// ... (Tus imports y conexión inicial se mantienen igual)
 
 const TaskSchema = new mongoose.Schema({
   titulo: String,
