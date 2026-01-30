@@ -24,8 +24,10 @@ app.use(express.json()); // Para entender archivos JSON
 app.use(cors()); // Para evitar problemas de permisos
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// Le dice que cuando entres a la raíz, cargue el index.html
-app.get('*', (req, res) => {
+
+
+// Cambiamos '*' por '(.*)' que es el nuevo formato para atrapar todo
+app.get('(.*)', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
 });
 
