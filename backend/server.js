@@ -22,7 +22,12 @@ if (!process.env.MONGO_URI) {
 const app = express();
 app.use(express.json()); // Para entender archivos JSON
 app.use(cors()); // Para evitar problemas de permisos
+app.use(express.static(path.join(__dirname, '../frontend')));
 
+// Le dice que cuando entres a la raíz, cargue el index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
+});
 
 // ... (Tus imports y conexión inicial se mantienen igual)
 
@@ -70,10 +75,14 @@ app.put("/tareas/:id", async (req, res) => {
 });
 
 // ... (El resto del app.listen se mantiene igual)// Busca el final de tu server.js y déjalo así:
-const PUERTO = 3000;
+/* const PUERTO = 3000;
 app.listen(PUERTO, "0.0.0.0", () => {
   console.log(`🚀 Servidor listo en la red local!`);
   console.log(`PC: http://localhost:${PUERTO}`);
   console.log(`Celular: http://192.168.1.4:${PUERTO}`);
 });
-// app.listen(3000, () => console.log("Servidor corriendo en el puerto 3000"));
+ */
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
