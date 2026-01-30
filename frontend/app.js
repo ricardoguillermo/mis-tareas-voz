@@ -194,7 +194,7 @@ function pedirClave() {
   const clave = prompt("Introduce la clave de familiar para editar:");
 
   // Usamos la clave que sugeriste
-  if (clave === "Diana_hija" || clave === "Ricardo_esposo") {
+  if (clave === "Diana_hija" || clave === "Ricardo_esposo"|| clave === "Aníbal_hijo_menor"|| clave === "Guillermo_hijo_mayor") {
     document.getElementById("seccion-editor").style.display = "block";
     alert("Modo edición activado. Ahora puedes agregar tareas.");
   } else {
