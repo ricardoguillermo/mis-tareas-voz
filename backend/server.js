@@ -26,9 +26,15 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 
 
 
-// En Express 5, los parámetros con asterisco deben tener nombre
-app.get('/:any*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
+// Usamos app.use en lugar de app.get para capturar todas las rutas
+// y enviarlas al index.html
+app.use((req, res, next) => {
+    // Si la ruta no es de la API (tareas), enviamos el index.html
+    if (!req.path.startsWith('/tareas')) {
+        res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
+    } else {
+        next();
+    }
 });
 
 const TaskSchema = new mongoose.Schema({
