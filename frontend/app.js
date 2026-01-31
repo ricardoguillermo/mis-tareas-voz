@@ -79,13 +79,15 @@ btn.onclick = () => {
   console.log("Escuchando...");
 };
 
-async function obtenerTareas() {
+async function obtenerTareas(fecha) {
+  // Si no pasamos fecha, intentamos sacarla del input
+    const fechaSeleccionada = fecha || document.getElementById('filtro-fecha').value;
   try {
-    const fechaSeleccionada = document.getElementById("filtro-fecha").value;
+    // const fechaSeleccionada = document.getElementById("filtro-fecha").value;
     // Enviamos la fecha como parámetro al backend
     const res = await fetch(`${urlBase}?fecha=${fechaSeleccionada}`);
     const tareas = await res.json();
-    // Recuerda usar urlBase si estás probando con el celular/Ngrok
+   
     /* const res = await fetch(urlBase);
     const tareas = await res.json(); */
     const lista = document.getElementById("lista-tareas");
@@ -244,3 +246,24 @@ function detenerMusica() {
   repro.src = "";
   hablar("Música apagada");
 }
+
+// Esta función se ejecuta apenas carga la página en la tablet
+window.addEventListener('DOMContentLoaded', () => {
+    const inputFecha = document.getElementById('fecha-seleccionada'); 
+    
+    // 1. Obtenemos la fecha de hoy en el huso horario local (Uruguay)
+    const hoy = new Date();
+    const offset = hoy.getTimezoneOffset();
+    const fechaLocal = new Date(hoy.getTimeOffset() - (offset * 60 * 1000));
+    const fechaFormateada = hoy.toISOString().split('T')[0];
+    
+    // 2. Seteamos el valor visual del calendario
+    if (inputFecha) {
+        inputFecha.value = fechaFormateada;
+        console.log("Fecha del día establecida: " + fechaFormateada);
+    }
+    
+    // 3. Llamamos a tu función para que cargue las tareas de hoy de inmediato
+    obtenerTareas(fechaFormateada);
+});
+
