@@ -248,7 +248,7 @@ function detenerMusica() {
 }
 
 // Esta función se ejecuta apenas carga la página en la tablet
-window.addEventListener('DOMContentLoaded', () => {
+/* window.addEventListener('DOMContentLoaded', () => {
     const inputFecha = document.getElementById('fecha-seleccionada'); 
     
     // 1. Obtenemos la fecha de hoy en el huso horario local (Uruguay)
@@ -266,4 +266,4 @@ window.addEventListener('DOMContentLoaded', () => {
     // 3. Llamamos a tu función para que cargue las tareas de hoy de inmediato
     obtenerTareas(fechaFormateada);
 });
-
+ */
