@@ -241,11 +241,8 @@ async function obtenerTareas() {
     try {
         const respuesta = await fetch(`https://mis-tareas-voz.onrender.com/tareas?fecha=${fechaABuscar}`);
         const tareas = await respuesta.json();
-        
-        // Aquí llamas a tu función que dibuja las tareas en pantalla
-        /* if (typeof renderizarTareas === 'function') {
-            renderizarTareas(tareas); 
-        } */
+        console.log("pase por aqui");
+       
       // LIMPIAMOS LA LISTA ANTES DE MOSTRAR LAS NUEVAS
         listaTareas.innerHTML = ""; 
 
