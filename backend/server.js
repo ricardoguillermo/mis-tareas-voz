@@ -56,18 +56,15 @@ app.post("/tareas", async (req, res) => {
 });
 
 // RUTA PARA VER TAREAS (Con filtro de fecha)
+// En tu server.js debe estar así:
 app.get("/tareas", async (req, res) => {
-  try {
-    const { fecha } = req.query;
+    const { fecha } = req.query; // <--- Aquí recibe 'fecha'
     let filtro = {};
     if (fecha) {
-      filtro.fecha_creacion = fecha;
+        filtro.fecha_creacion = fecha; // <--- Aquí busca en la base de datos
     }
-    const tareas = await Task.find(filtro); // <--- Cambiado de 'Tarea' a 'Task'
-    res.json(tareas); 
-  } catch (error) {
-    res.status(500).json({ error: "Error en el servidor" });
-  }
+    const tareas = await Task.find(filtro);
+    res.json(tareas);
 });
 
 // RUTA PARA ACTUALIZAR EL CHEQUEO
