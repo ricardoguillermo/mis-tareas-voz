@@ -144,7 +144,7 @@ function hablar(texto) {
   window.speechSynthesis.speak(mensaje);
 }
 
-// Actualizamos las funciones de navegación repetida¡
+/* // Actualizamos las funciones de navegación repetida¡
 function mostrarSeccion(seccion) {
   // 1. Escondemos absolutamente todo primero
   document.getElementById("panel-tablet").style.display = "none";
@@ -167,7 +167,7 @@ function mostrarSeccion(seccion) {
     document.getElementById("seccion-musica").style.display = "block";
   }
 }
-
+ */
 function pedirClave() {
   const clave = prompt("Introduce la clave de familiar para editar:");
 
