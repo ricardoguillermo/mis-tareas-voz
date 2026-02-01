@@ -6,7 +6,7 @@ recognition.lang = "es-ES";
 const btn = document.querySelector("#btn-voz");
 const MIinput = document.getElementById("tarea-texto");
 
-document.getElementById("filtro-fecha").onchange = obtenerTareas;
+document.getElementById("fecha-seleccionada").onchange = obtenerTareas;
 // 2. Función para GUARDAR en MongoDB
 // Antes: fetch('http://localhost:3000/tareas')
 // Ahora:
