@@ -78,7 +78,7 @@ btn.onclick = () => {
   recognition.start();
   console.log("Escuchando...");
 };
-
+/* 
 async function obtenerTareas() {
     // 1. Tomamos la fecha directamente del input del calendario
     const fechaInput = document.getElementById('fecha-seleccionada').value;
@@ -96,7 +96,7 @@ async function obtenerTareas() {
     } catch (error) {
         console.error("Error al obtener tareas:", error);
     }
-}
+} */
 
 async function actualizarEstado(id, estado) {
   try {
@@ -224,22 +224,49 @@ function detenerMusica() {
 }
 
 // Esta función se ejecuta apenas carga la página en la tablet
- window.addEventListener('DOMContentLoaded', () => {
-    const inputFecha = document.getElementById('fecha-seleccionada'); 
+// 1. FUNCIÓN PARA OBTENER TAREAS
+async function obtenerTareas() {
+    const inputFecha = document.getElementById('fecha-seleccionada');
     
-    // 1. Obtenemos la fecha de hoy en el huso horario local (Uruguay)
-    const hoy = new Date();
-    const offset = hoy.getTimezoneOffset();
-    const fechaLocal = new Date(hoy.getTimeOffset() - (offset * 60 * 1000));
-    const fechaFormateada = hoy.toISOString().split('T')[0];
-    
-    // 2. Seteamos el valor visual del calendario
-    if (inputFecha) {
-        inputFecha.value = fechaFormateada;
-        console.log("Fecha del día establecida: " + fechaFormateada);
+    // Si el input no existe en el HTML, avisamos y no seguimos
+    if (!inputFecha) {
+        console.error("Error: No se encontró el elemento 'fecha-seleccionada' en el HTML.");
+        return;
     }
+
+    const fechaABuscar = inputFecha.value;
+    console.log("Buscando tareas para la fecha:", fechaABuscar);
+
+    try {
+        const respuesta = await fetch(`https://mis-tareas-voz.onrender.com/tareas?fecha=${fechaABuscar}`);
+        const tareas = await respuesta.json();
+        
+        // Aquí llamas a tu función que dibuja las tareas en pantalla
+        if (typeof renderizarTareas === 'function') {
+            renderizarTareas(tareas); 
+        }
+    } catch (error) {
+        console.error("Error en la conexión con Render:", error);
+    }
+}
+
+// 2. ACTIVADOR AL CARGAR LA PÁGINA
+window.addEventListener('DOMContentLoaded', () => {
+    const inputFecha = document.getElementById('fecha-seleccionada');
     
-    // 3. Llamamos a tu función para que cargue las tareas de hoy de inmediato
-    obtenerTareas(fechaFormateada);
+    if (inputFecha) {
+        // Obtenemos la fecha de hoy correctamente (formato AAAA-MM-DD)
+        const hoy = new Date();
+        const anio = hoy.getFullYear();
+        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+        const dia = String(hoy.getDate()).padStart(2, '0');
+        const fechaHoy = `${anio}-${mes}-${dia}`;
+        
+        // Seteamos el calendario
+        inputFecha.value = fechaHoy;
+        
+        // Cargamos las tareas de hoy
+        obtenerTareas();
+    }
 });
  

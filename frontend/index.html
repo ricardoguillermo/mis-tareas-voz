@@ -68,8 +68,8 @@
         ⚙️ Administrar tareas
       </button>
       <div class="calendario-seccion">
-        <label for="filtro-fecha">📅 Ver tareas del día:</label>
-        <input type="date" id="filtro-fecha" />
+        <label for="fecha-seleccionada">📅 Ver tareas del día:</label>
+        <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
       </div>
       <div id="contenedor-lista" style="display: none">
         <button
