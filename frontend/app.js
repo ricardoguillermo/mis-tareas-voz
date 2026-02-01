@@ -79,47 +79,23 @@ btn.onclick = () => {
   console.log("Escuchando...");
 };
 
-async function obtenerTareas(fecha) {
-  // Si no pasamos fecha, intentamos sacarla del input
-    const fechaSeleccionada = fecha || document.getElementById('filtro-fecha').value;
-  try {
-    // const fechaSeleccionada = document.getElementById("filtro-fecha").value;
-    // Enviamos la fecha como parámetro al backend
-    const res = await fetch(`${urlBase}?fecha=${fechaSeleccionada}`);
-    const tareas = await res.json();
-   
-    /* const res = await fetch(urlBase);
-    const tareas = await res.json(); */
-    const lista = document.getElementById("lista-tareas");
-    lista.innerHTML = "";
+async function obtenerTareas() {
+    // 1. Tomamos la fecha directamente del input del calendario
+    const fechaInput = document.getElementById('fecha-seleccionada').value;
+    
+    if (!fechaInput) return; // Si no hay fecha, no buscamos nada
 
-    tareas.forEach((tarea) => {
-      const item = document.createElement("li");
-
-      item.className = `tarea-item ${tarea.chequeado ? "completada" : ""}`;
-
-      item.innerHTML = `
-        <div style="display: flex; align-items: center; width: 100%;">
-            <input type="checkbox" 
-                   ${tarea.chequeado ? "checked" : ""} 
-                   onchange="actualizarEstado('${tarea._id}', this.checked)"
-                   style="width: 25px; height: 25px; cursor: pointer;">
-            
-            <div style="flex-grow: 1; margin-left: 15px;">
-                <span style="${tarea.chequeado ? "text-decoration: line-through; color: #95a5a6;" : "font-weight: 500;"}">
-                    ${tarea.titulo}
-                </span>
-                <small class="nota-texto" style="display: block;">
-                    ${tarea.notas || "Sin comentarios"}
-                </small>
-            </div>
-        </div>
-    `;
-      lista.appendChild(item);
-    });
-  } catch (error) {
-    console.error("Error al cargar tareas:", error);
-  }
+    try {
+        // 2. Enviamos la fecha como parámetro '?fecha='
+        const respuesta = await fetch(`https://mis-tareas-voz.onrender.com/tareas?fecha=${fechaInput}`);
+        const tareas = await respuesta.json();
+        
+        // 3. Tu lógica para mostrar las tareas (ejemplo: mostrarTareas(tareas))
+        mostrarTareas(tareas); 
+        console.log("Tareas cargadas para:", fechaInput);
+    } catch (error) {
+        console.error("Error al obtener tareas:", error);
+    }
 }
 
 async function actualizarEstado(id, estado) {
@@ -248,7 +224,7 @@ function detenerMusica() {
 }
 
 // Esta función se ejecuta apenas carga la página en la tablet
-/* window.addEventListener('DOMContentLoaded', () => {
+ window.addEventListener('DOMContentLoaded', () => {
     const inputFecha = document.getElementById('fecha-seleccionada'); 
     
     // 1. Obtenemos la fecha de hoy en el huso horario local (Uruguay)
@@ -266,4 +242,4 @@ function detenerMusica() {
     // 3. Llamamos a tu función para que cargue las tareas de hoy de inmediato
     obtenerTareas(fechaFormateada);
 });
- */
+ 
