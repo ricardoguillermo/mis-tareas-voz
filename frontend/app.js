@@ -282,6 +282,9 @@ window.addEventListener('DOMContentLoaded', () => {
         // Seteamos el calendario
         inputFecha.value = fechaHoy;
         
+          document.getElementById("seccion-editor").style.display = "none";
+
+
         // Cargamos las tareas de hoy
         obtenerTareas();
     }
@@ -289,6 +292,8 @@ window.addEventListener('DOMContentLoaded', () => {
  
 // ÚNICA FUNCIÓN PARA DIBUJAR EN PANTALLA
 function actualizarInterfazTareas(tareas) {
+    document.getElementById("seccion-editor").style.display = "none";
+
     const contenedor = document.getElementById('lista-tareas');
     if (!contenedor) return;
 
