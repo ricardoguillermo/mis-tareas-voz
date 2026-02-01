@@ -144,7 +144,7 @@ function hablar(texto) {
   window.speechSynthesis.speak(mensaje);
 }
 
-/* // Actualizamos las funciones de navegación repetida¡
+ /* // Actualizamos las funciones de navegación repetida¡
 function mostrarSeccion(seccion) {
   // 1. Escondemos absolutamente todo primero
   document.getElementById("panel-tablet").style.display = "none";
@@ -166,8 +166,8 @@ function mostrarSeccion(seccion) {
     // Esta es la parte que faltaba o estaba fallando
     document.getElementById("seccion-musica").style.display = "block";
   }
-}
- */
+} */
+ 
 function pedirClave() {
   const clave = prompt("Introduce la clave de familiar para editar:");
 
@@ -225,7 +225,7 @@ function detenerMusica() {
 
 // Esta función se ejecuta apenas carga la página en la tablet
 // 1. FUNCIÓN PARA OBTENER TAREAS
-async function obtenerTareas() {
+/* async function obtenerTareas() {
     const inputFecha = document.getElementById('fecha-seleccionada');
     const listaTareas = document.getElementById('lista-tareas');
     
@@ -265,7 +265,7 @@ async function obtenerTareas() {
     } catch (error) {
         console.error("Error en la conexión con Render:", error);
     }
-}
+} */
 
 // 2. ACTIVADOR AL CARGAR LA PÁGINA
 window.addEventListener('DOMContentLoaded', () => {
@@ -287,3 +287,44 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
  
+// ÚNICA FUNCIÓN PARA DIBUJAR EN PANTALLA
+function actualizarInterfazTareas(tareas) {
+    const contenedor = document.getElementById('lista-tareas');
+    if (!contenedor) return;
+
+    // Limpiamos lo que haya viejo
+    contenedor.innerHTML = "";
+
+    if (tareas.length === 0) {
+        contenedor.innerHTML = '<p class="mensaje-vacio">No hay tareas para este día.</p>';
+        return;
+    }
+
+    // Dibujamos las nuevas
+    tareas.forEach(tarea => {
+        const div = document.createElement('div');
+        div.className = 'tarea-card';
+        div.innerHTML = `
+            <div class="tarea-info">
+                <input type="checkbox" ${tarea.chequeado ? 'checked' : ''} 
+                       onchange="alternarTarea('${tarea._id}', this.checked)">
+                <span class="${tarea.chequeado ? 'completada' : ''}">${tarea.titulo}</span>
+            </div>
+        `;
+        contenedor.appendChild(div);
+    });
+}
+
+async function obtenerTareas() {
+    const fecha = document.getElementById('fecha-seleccionada').value;
+    try {
+        const res = await fetch(`https://mis-tareas-voz.onrender.com/tareas?fecha=${fecha}`);
+        const datos = await res.json();
+        
+        // LLAMADA ÚNICA
+        actualizarInterfazTareas(datos); 
+        
+    } catch (error) {
+        console.error("Error al traer datos:", error);
+    }
+}
