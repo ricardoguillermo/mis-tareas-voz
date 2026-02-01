@@ -144,7 +144,7 @@ function hablar(texto) {
   window.speechSynthesis.speak(mensaje);
 }
 
-// Actualizamos las funciones de navegación
+// Actualizamos las funciones de navegación repetida¡
 function mostrarSeccion(seccion) {
   // 1. Escondemos absolutamente todo primero
   document.getElementById("panel-tablet").style.display = "none";
@@ -227,6 +227,7 @@ function detenerMusica() {
 // 1. FUNCIÓN PARA OBTENER TAREAS
 async function obtenerTareas() {
     const inputFecha = document.getElementById('fecha-seleccionada');
+    const listaTareas = document.getElementById('lista-tareas');
     
     // Si el input no existe en el HTML, avisamos y no seguimos
     if (!inputFecha) {
@@ -242,9 +243,28 @@ async function obtenerTareas() {
         const tareas = await respuesta.json();
         
         // Aquí llamas a tu función que dibuja las tareas en pantalla
-        if (typeof renderizarTareas === 'function') {
+        /* if (typeof renderizarTareas === 'function') {
             renderizarTareas(tareas); 
+        } */
+      // LIMPIAMOS LA LISTA ANTES DE MOSTRAR LAS NUEVAS
+        listaTareas.innerHTML = ""; 
+
+        if (tareas.length === 0) {
+            listaTareas.innerHTML = "<p>No hay tareas para este día.</p>";
+            return;
         }
+      
+        // DIBUJAMOS CADA TAREA
+        tareas.forEach(tarea => {
+            const div = document.createElement('div');
+            div.className = 'tarea-item';
+            div.innerHTML = `
+                <input type="checkbox" ${tarea.chequeado ? 'checked' : ''} onchange="actualizarTarea('${tarea._id}', this.checked)">
+                <span>${tarea.titulo}</span>
+            `;
+            listaTareas.appendChild(div);
+        });
+
     } catch (error) {
         console.error("Error en la conexión con Render:", error);
     }
