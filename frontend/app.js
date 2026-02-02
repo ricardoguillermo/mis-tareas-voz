@@ -120,7 +120,7 @@ async function actualizarEstado(id, estado) {
   }
 }
 
-function mostrarSeccion(seccion) {
+/* function mostrarSeccion(seccion) {
   // 1. Ocultar todo primero
   document.getElementById("panel-tablet").style.display = "none";
   document.getElementById("contenedor-lista").style.display = "none";
@@ -134,7 +134,7 @@ function mostrarSeccion(seccion) {
     // Opcional: mostrar el dictado solo si tú vas a ingresar la tarea
     document.querySelector(".input-section").style.display = "block";
   }
-}
+} */
 
 // Nota: Las funciones mostrarSeccion y volverAlMenu se llaman desde el HTML
 function hablar(texto) {
@@ -267,7 +267,7 @@ function detenerMusica() {
     }
 } */
 
-// 2. ACTIVADOR AL CARGAR LA PÁGINA
+/* // 2. ACTIVADOR AL CARGAR LA PÁGINA
 window.addEventListener('DOMContentLoaded', () => {
     const inputFecha = document.getElementById('fecha-seleccionada');
     
@@ -288,11 +288,10 @@ window.addEventListener('DOMContentLoaded', () => {
         // Cargamos las tareas de hoy
         obtenerTareas();
     }
-});
+}); */
  
 // ÚNICA FUNCIÓN PARA DIBUJAR EN PANTALLA
 function actualizarInterfazTareas(tareas) {
-    document.getElementById("seccion-editor").style.display = "none";
 
     const contenedor = document.getElementById('lista-tareas');
     if (!contenedor) return;
@@ -333,3 +332,30 @@ async function obtenerTareas() {
         console.error("Error al traer datos:", error);
     }
 }
+
+// 1. EL CEREBRO DE LAS PANTALLAS
+function mostrarSeccion(idSeccion) {
+    // Escondemos todas las secciones
+    const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios'];
+    secciones.forEach(id => {
+        const elemento = document.getElementById(id);
+        if (elemento) elemento.style.display = 'none';
+    });
+
+    // Mostramos la que elegimos
+    document.getElementById(idSeccion).style.display = 'block';
+
+    // CERRAR EL EDITOR: Si salimos de tareas, nos aseguramos que el editor se cierre
+    const editor = document.getElementById('contenedor-editor'); // El ID de tu cuadro azul punteado
+    if (editor) editor.style.display = 'none';
+}
+
+// 2. INICIO INTELIGENTE
+window.addEventListener('DOMContentLoaded', () => {
+    const selector = document.getElementById('fecha-seleccionada');
+    if (selector) {
+        const hoy = new Date().toISOString().split('T')[0];
+        selector.value = hoy; // Primero la fecha...
+        obtenerTareas();      // ...y luego la carga
+    }
+});
