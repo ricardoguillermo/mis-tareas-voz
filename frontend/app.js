@@ -336,7 +336,7 @@ async function obtenerTareas() {
 // 1. EL CEREBRO DE LAS PANTALLAS
 function mostrarSeccion(idSeccion) {
     // Escondemos todas las secciones
-    const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios'];
+    const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios','seccion-familia'];
     secciones.forEach(id => {
         const elemento = document.getElementById(id);
         if (elemento) elemento.style.display = 'none';
