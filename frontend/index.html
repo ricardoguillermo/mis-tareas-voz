@@ -30,9 +30,55 @@
     </div>
 
     <div id="seccion-radios" class="seccion" style="display: none;">
-        <button onclick="mostrarSeccion('menu-principal')">⬅️ Volver al Menú</button>
+        <button onclick="mostrarSeccion('menu-principal')" class="btn-volver">⬅️ Volver al Menú</button>
         <h2>Radios para Betty</h2>
+        
+        <div class="contenedor-radios">
+            <div class="tarjeta-radio">
+                <div class="info-radio">
+                    <span class="emoji-radio">📻</span>
+                    <div>
+                        <h3>Radio Clarín</h3>
+                        <p>Tango y noticias</p>
+                    </div>
+                </div>
+                <button class="btn-enlace" onclick="window.open('https://radioclarin.com.uy/', '_blank')">Escuchar Ahora</button>
+            </div>
+
+            <div class="tarjeta-radio">
+                <div class="info-radio">
+                    <span class="emoji-radio">🎵</span>
+                    <div>
+                        <h3>Radio Monte Carlo</h3>
+                        <p>Música y compañía</p>
+                    </div>
+                </div>
+                <button class="btn-enlace" onclick="window.open('https://www.radiomontecarlo.com.uy/', '_blank')">Escuchar Ahora</button>
+            </div>
+
+            <div class="tarjeta-radio">
+                <div class="info-radio">
+                    <span class="emoji-radio">🌟</span>
+                    <div>
+                        <h3>Radio Aspen</h3>
+                        <p>Clásicos en inglés</p>
+                    </div>
+                </div>
+                <button class="btn-enlace" onclick="window.open('https://fmaspen.com/', '_blank')">Escuchar Ahora</button>
+            </div>
+
+            <div class="tarjeta-radio">
+                <div class="info-radio">
+                    <span class="emoji-radio">⚽</span>
+                    <div>
+                        <h3>Radio Sport 890</h3>
+                        <p>Deportes y fútbol</p>
+                    </div>
+                </div>
+                <button class="btn-enlace" onclick="window.open('https://www.sport890.com.uy/', '_blank')">Escuchar Ahora</button>
+            </div>
         </div>
+    </div>
 
     <script src="app.js"></script>
 </body>

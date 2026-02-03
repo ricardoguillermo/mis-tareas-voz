@@ -335,23 +335,21 @@ async function obtenerTareas() {
 
 // 1. EL CEREBRO DE LAS PANTALLAS
 function mostrarSeccion(idSeccion) {
-    // 1. Lista de secciones principales
     const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios'];
 
     secciones.forEach(id => {
         const elemento = document.getElementById(id);
         if (elemento) {
-            elemento.style.display = 'none'; // Ocultamos todo
+            elemento.style.display = 'none';
         }
     });
 
-    // 2. Mostramos la elegida
     const activa = document.getElementById(idSeccion);
     if (activa) {
         activa.style.display = 'block';
     }
 
-    // 3. Limpieza extra: siempre cerramos el editor de tareas al cambiar
+    // Cerramos el editor siempre por seguridad
     const editor = document.getElementById('contenedor-editor');
     if (editor) {
         editor.style.display = 'none';

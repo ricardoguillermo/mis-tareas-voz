@@ -319,3 +319,28 @@ textarea {
     text-decoration: line-through;
     color: gray;
 }
+
+.contenedor-radios {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas */
+    gap: 15px;
+    padding: 15px;
+}
+
+.tarjeta-radio {
+    background: white;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-enlace {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    width: 100%;
+    font-weight: bold;
+    cursor: pointer;
+}
