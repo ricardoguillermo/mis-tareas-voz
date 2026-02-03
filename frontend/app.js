@@ -361,9 +361,17 @@ function mostrarSeccion(idSeccion) {
 // 2. INICIO INTELIGENTE
 window.addEventListener('DOMContentLoaded', () => {
     const selector = document.getElementById('fecha-seleccionada');
+    const lista = document.getElementById('lista-tareas');
+    
     if (selector) {
+        // 1. Limpiamos visualmente la lista primero
+        if (lista) lista.innerHTML = ""; 
+        
+        // 2. Ponemos la fecha de hoy
         const hoy = new Date().toISOString().split('T')[0];
-        selector.value = hoy; // Primero la fecha...
-        obtenerTareas();      // ...y luego la carga
+        selector.value = hoy;
+        
+        // 3. Recién ahí buscamos las tareas
+        obtenerTareas();
     }
 });
