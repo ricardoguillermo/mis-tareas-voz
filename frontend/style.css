@@ -295,3 +295,27 @@ textarea {
     border-radius: 10px;
     font-weight: bold;
 }
+
+/* Estilo para las secciones */
+.seccion {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* El cuadro azul punteado del editor */
+.editor-punteado {
+    border: 2px dashed #3498db;
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+/* Para que las tareas tachadas se vean claras */
+.completada {
+    text-decoration: line-through;
+    color: gray;
+}

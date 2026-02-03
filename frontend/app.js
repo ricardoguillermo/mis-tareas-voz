@@ -335,19 +335,27 @@ async function obtenerTareas() {
 
 // 1. EL CEREBRO DE LAS PANTALLAS
 function mostrarSeccion(idSeccion) {
-    // Escondemos todas las secciones
-    const secciones = ['tareas', 'radios','familia'];
+    // 1. Lista de secciones principales
+    const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios'];
+
     secciones.forEach(id => {
         const elemento = document.getElementById(id);
-        if (elemento) elemento.style.display = 'none';
+        if (elemento) {
+            elemento.style.display = 'none'; // Ocultamos todo
+        }
     });
 
-    // Mostramos la que elegimos
-    document.getElementById(idSeccion).style.display = 'block';
+    // 2. Mostramos la elegida
+    const activa = document.getElementById(idSeccion);
+    if (activa) {
+        activa.style.display = 'block';
+    }
 
-    // CERRAR EL EDITOR: Si salimos de tareas, nos aseguramos que el editor se cierre
-    const editor = document.getElementById('contenedor-editor'); // El ID de tu cuadro azul punteado
-    if (editor) editor.style.display = 'none';
+    // 3. Limpieza extra: siempre cerramos el editor de tareas al cambiar
+    const editor = document.getElementById('contenedor-editor');
+    if (editor) {
+        editor.style.display = 'none';
+    }
 }
 
 // 2. INICIO INTELIGENTE
