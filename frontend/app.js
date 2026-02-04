@@ -335,7 +335,7 @@ async function obtenerTareas() {
 
 // 1. EL CEREBRO DE LAS PANTALLAS
 function mostrarSeccion(idSeccion) {
-    // Agregamos 'seccion-familia' a la lista de limpieza
+    // Agregamos 'seccion-familia' a la lista
     const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios', 'seccion-familia'];
 
     secciones.forEach(id => {
