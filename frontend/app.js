@@ -78,25 +78,6 @@ btn.onclick = () => {
   recognition.start();
   console.log("Escuchando...");
 };
-/* 
-async function obtenerTareas() {
-    // 1. Tomamos la fecha directamente del input del calendario
-    const fechaInput = document.getElementById('fecha-seleccionada').value;
-    
-    if (!fechaInput) return; // Si no hay fecha, no buscamos nada
-
-    try {
-        // 2. Enviamos la fecha como parámetro '?fecha='
-        const respuesta = await fetch(`https://mis-tareas-voz.onrender.com/tareas?fecha=${fechaInput}`);
-        const tareas = await respuesta.json();
-        
-        // 3. Tu lógica para mostrar las tareas (ejemplo: mostrarTareas(tareas))
-        mostrarTareas(tareas); 
-        console.log("Tareas cargadas para:", fechaInput);
-    } catch (error) {
-        console.error("Error al obtener tareas:", error);
-    }
-} */
 
 async function actualizarEstado(id, estado) {
   try {
@@ -120,21 +101,6 @@ async function actualizarEstado(id, estado) {
   }
 }
 
-/* function mostrarSeccion(seccion) {
-  // 1. Ocultar todo primero
-  document.getElementById("panel-tablet").style.display = "none";
-  document.getElementById("contenedor-lista").style.display = "none";
-  document.getElementById("seccion-musica").style.display = "none";
-  // Ocultamos también la sección de ingreso de tareas para que no distraiga
-  document.querySelector(".input-section").style.display = "none";
-
-  // 2. Mostrar solo lo que elegimos
-  if (seccion === "tareas") {
-    document.getElementById("contenedor-lista").style.display = "block";
-    // Opcional: mostrar el dictado solo si tú vas a ingresar la tarea
-    document.querySelector(".input-section").style.display = "block";
-  }
-} */
 
 // Nota: Las funciones mostrarSeccion y volverAlMenu se llaman desde el HTML
 function hablar(texto) {
@@ -144,29 +110,7 @@ function hablar(texto) {
   window.speechSynthesis.speak(mensaje);
 }
 
- /* // Actualizamos las funciones de navegación repetida¡
-function mostrarSeccion(seccion) {
-  // 1. Escondemos absolutamente todo primero
-  document.getElementById("panel-tablet").style.display = "none";
-  document.getElementById("contenedor-lista").style.display = "none";
-  document.getElementById("seccion-familia").style.display = "none";
 
-  // Si ya creaste el div de música, asegúrate de que el ID coincida
-  const seccionMusica = document.getElementById("seccion-musica");
-  if (seccionMusica) {
-    seccionMusica.style.display = "none";
-  }
-
-  // 2. Mostramos solo la que corresponde
-  if (seccion === "tareas") {
-    document.getElementById("contenedor-lista").style.display = "block";
-  } else if (seccion === "familia") {
-    document.getElementById("seccion-familia").style.display = "block";
-  } else if (seccion === "musica") {
-    // Esta es la parte que faltaba o estaba fallando
-    document.getElementById("seccion-musica").style.display = "block";
-  }
-} */
  
 function pedirClave() {
   const clave = prompt("Introduce la clave de familiar para editar:");
@@ -223,73 +167,7 @@ function detenerMusica() {
   hablar("Música apagada");
 }
 
-// Esta función se ejecuta apenas carga la página en la tablet
-// 1. FUNCIÓN PARA OBTENER TAREAS
-/* async function obtenerTareas() {
-    const inputFecha = document.getElementById('fecha-seleccionada');
-    const listaTareas = document.getElementById('lista-tareas');
-    
-    // Si el input no existe en el HTML, avisamos y no seguimos
-    if (!inputFecha) {
-        console.error("Error: No se encontró el elemento 'fecha-seleccionada' en el HTML.");
-        return;
-    }
 
-    const fechaABuscar = inputFecha.value;
-    console.log("Buscando tareas para la fecha:", fechaABuscar);
-
-    try {
-        const respuesta = await fetch(`https://mis-tareas-voz.onrender.com/tareas?fecha=${fechaABuscar}`);
-        const tareas = await respuesta.json();
-        console.log("pase por aqui");
-       
-      // LIMPIAMOS LA LISTA ANTES DE MOSTRAR LAS NUEVAS
-        listaTareas.innerHTML = ""; 
-
-        if (tareas.length === 0) {
-            listaTareas.innerHTML = "<p>No hay tareas para este día.</p>";
-            return;
-        }
-      
-        // DIBUJAMOS CADA TAREA
-        tareas.forEach(tarea => {
-            const div = document.createElement('div');
-            div.className = 'tarea-item';
-            div.innerHTML = `
-                <input type="checkbox" ${tarea.chequeado ? 'checked' : ''} onchange="actualizarTarea('${tarea._id}', this.checked)">
-                <span>${tarea.titulo}</span>
-            `;
-            listaTareas.appendChild(div);
-        });
-
-    } catch (error) {
-        console.error("Error en la conexión con Render:", error);
-    }
-} */
-
-/* // 2. ACTIVADOR AL CARGAR LA PÁGINA
-window.addEventListener('DOMContentLoaded', () => {
-    const inputFecha = document.getElementById('fecha-seleccionada');
-    
-    if (inputFecha) {
-        // Obtenemos la fecha de hoy correctamente (formato AAAA-MM-DD)
-        const hoy = new Date();
-        const anio = hoy.getFullYear();
-        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-        const dia = String(hoy.getDate()).padStart(2, '0');
-        const fechaHoy = `${anio}-${mes}-${dia}`;
-        
-        // Seteamos el calendario
-        inputFecha.value = fechaHoy;
-        
-          document.getElementById("seccion-editor").style.display = "none";
-
-
-        // Cargamos las tareas de hoy
-        obtenerTareas();
-    }
-}); */
- 
 // ÚNICA FUNCIÓN PARA DIBUJAR EN PANTALLA
 function actualizarInterfazTareas(tareas) {
 
@@ -318,20 +196,6 @@ function actualizarInterfazTareas(tareas) {
         contenedor.appendChild(div);
     });
 }
-/* 
-async function obtenerTareas() {
-    const fecha = document.getElementById('fecha-seleccionada').value;
-    try {
-        const res = await fetch(`https://mis-tareas-voz.onrender.com/tareas?fecha=${fecha}`);
-        const datos = await res.json();
-        
-        // LLAMADA ÚNICA
-        actualizarInterfazTareas(datos); 
-        
-    } catch (error) {
-        console.error("Error al traer datos:", error);
-    }
-} */
 
 
 async function obtenerTareas() {
@@ -368,24 +232,7 @@ function mostrarSeccion(idSeccion) {
         activa.style.display = 'block';
     }
 }
-/* 
-// 2. INICIO INTELIGENTE
-window.addEventListener('DOMContentLoaded', () => {
-    const selector = document.getElementById('fecha-seleccionada');
-    const lista = document.getElementById('lista-tareas');
-    
-    if (selector) {
-        // 1. Limpiamos visualmente la lista primero
-        if (lista) lista.innerHTML = ""; 
-        
-        // 2. Ponemos la fecha de hoy
-        const hoy = new Date().toISOString().split('T')[0];
-        selector.value = hoy;
-        
-        // 3. Recién ahí buscamos las tareas
-        obtenerTareas();
-    }
-}); */
+
 // Este bloque hace que la app "despierte" con la fecha de hoy y sus tareas
 window.addEventListener('DOMContentLoaded', () => {
     const selector = document.getElementById('fecha-seleccionada');
