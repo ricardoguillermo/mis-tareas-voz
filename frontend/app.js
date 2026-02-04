@@ -269,6 +269,24 @@ async function guardarTareaManual() {
 
 // Conexión del Micrófono (dentro del DOMContentLoaded)
 window.addEventListener('DOMContentLoaded', () => {
+
+const selector = document.getElementById('fecha-seleccionada');
+    
+    if (selector) {
+        // 1. Obtenemos la fecha de hoy en formato AAAA-MM-DD (Formato que entiende el input type="date")
+        const hoy = new Date();
+        const anio = hoy.getFullYear();
+        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+        const dia = String(hoy.getDate()).padStart(2, '0');
+        const fechaHoy = `${anio}-${mes}-${dia}`;
+        
+        // 2. Seteamos el calendario visualmente
+        selector.value = fechaHoy;
+        console.log("Sistema iniciado en la fecha: " + fechaHoy);
+
+// 3. ¡IMPORTANTE! Llamamos a la función para que busque las tareas de hoy en Render
+        obtenerTareas();
+
     const btnVoz = document.getElementById('btn-voz');
     if (btnVoz) {
         btnVoz.onclick = () => {
