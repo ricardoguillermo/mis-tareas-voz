@@ -233,23 +233,53 @@ function mostrarSeccion(idSeccion) {
     }
 }
 
-// Este bloque hace que la app "despierte" con la fecha de hoy y sus tareas
-window.addEventListener('DOMContentLoaded', () => {
-    const selector = document.getElementById('fecha-seleccionada');
-    
-    if (selector) {
-        // 1. Obtenemos la fecha de hoy en formato AAAA-MM-DD (Formato que entiende el input type="date")
-        const hoy = new Date();
-        const anio = hoy.getFullYear();
-        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-        const dia = String(hoy.getDate()).padStart(2, '0');
-        const fechaHoy = `${anio}-${mes}-${dia}`;
-        
-        // 2. Seteamos el calendario visualmente
-        selector.value = fechaHoy;
-        console.log("Sistema iniciado en la fecha: " + fechaHoy);
+// Función para guardar lo que escribiste o dictaste
+async function guardarTareaManual() {
+    const titulo = document.getElementById("titulo-tarea").value;
+    const notas = document.getElementById("notas-tarea").value;
+    const fecha = document.getElementById("fecha-seleccionada").value;
 
-        // 3. ¡IMPORTANTE! Llamamos a la función para que busque las tareas de hoy en Render
-        obtenerTareas();
+    if (!titulo) return alert("Por favor, escribe o dicta una tarea.");
+
+    try {
+        const response = await fetch("https://mis-tareas-voz.onrender.com/tareas", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ 
+                titulo: titulo, 
+                notas: notas, 
+                fecha_creacion: fecha, // Guardamos con la fecha del calendario
+                chequeado: false 
+            }),
+        });
+
+        if (response.ok) {
+            // 1. Limpiamos los campos
+            document.getElementById("titulo-tarea").value = "";
+            document.getElementById("notas-tarea").value = "";
+            // 2. Cerramos el editor azul
+            document.getElementById('contenedor-editor').style.display = 'none';
+            // 3. Refrescamos la lista de hoy
+            obtenerTareas();
+        }
+    } catch (error) {
+        console.error("Error al guardar:", error);
     }
+}
+
+// Conexión del Micrófono (dentro del DOMContentLoaded)
+window.addEventListener('DOMContentLoaded', () => {
+    const btnVoz = document.getElementById('btn-voz');
+    if (btnVoz) {
+        btnVoz.onclick = () => {
+            recognition.start();
+            console.log("Escuchando voz...");
+        };
+    }
+    
+    // Al recibir el resultado de voz, lo ponemos en el input
+    recognition.onresult = (event) => {
+        const voz = event.results[0][0].transcript;
+        document.getElementById("titulo-tarea").value = voz;
+    };
 });

@@ -38,11 +38,21 @@
         ⬅️ Volver al Menú
       </button>
 
-      <div id="contenedor-editor" class="editor-punteado" style="display: none">
-        <h3>Nueva Tarea</h3>
-        <input type="text" id="titulo-tarea" placeholder="¿Qué hacemos?" />
-        <button onclick="guardarTarea()">Guardar</button>
-      </div>
+      <div id="contenedor-editor" class="editor-punteado" style="display: none;">
+    <h3>✍️ Agregar Nueva Actividad</h3>
+    
+    <input type="text" id="titulo-tarea" placeholder="¿Qué hacemos juntos?">
+    <textarea id="notas-tarea" placeholder="Notas..."></textarea>
+
+    <div class="botones-editor">
+        <button id="btn-voz" class="btn-dictar">
+            <span>🎤</span> Dictar
+        </button>
+        <button id="btn-guardar" class="btn-guardar" onclick="guardarTareaManual()">
+            <span>💾</span> Guardar
+        </button>
+    </div>
+</div>
 
       <div class="controles-lista">
         <button
