@@ -335,7 +335,8 @@ async function obtenerTareas() {
 
 // 1. EL CEREBRO DE LAS PANTALLAS
 function mostrarSeccion(idSeccion) {
-    const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios'];
+    // Agregamos 'seccion-familia' a la lista de limpieza
+    const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios', 'seccion-familia'];
 
     secciones.forEach(id => {
         const elemento = document.getElementById(id);
@@ -347,12 +348,6 @@ function mostrarSeccion(idSeccion) {
     const activa = document.getElementById(idSeccion);
     if (activa) {
         activa.style.display = 'block';
-    }
-
-    // Cerramos el editor siempre por seguridad
-    const editor = document.getElementById('contenedor-editor');
-    if (editor) {
-        editor.style.display = 'none';
     }
 }
 
