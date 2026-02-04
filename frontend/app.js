@@ -283,6 +283,7 @@ const selector = document.getElementById('fecha-seleccionada');
         // 2. Seteamos el calendario visualmente
         selector.value = fechaHoy;
         console.log("Sistema iniciado en la fecha: " + fechaHoy);
+    }
 
 // 3. ¡IMPORTANTE! Llamamos a la función para que busque las tareas de hoy en Render
         obtenerTareas();
