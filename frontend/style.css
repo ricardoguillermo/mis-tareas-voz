@@ -375,3 +375,33 @@ textarea {
     width: 100%;
     font-weight: bold;
 }
+
+.botones-editor {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.btn-dictar {
+    background-color: #3498db; /* Azul */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    flex: 1;
+}
+
+.btn-guardar {
+    background-color: #27ae60; /* Verde */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    flex: 1;
+}
