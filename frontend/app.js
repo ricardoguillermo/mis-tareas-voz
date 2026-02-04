@@ -318,7 +318,7 @@ function actualizarInterfazTareas(tareas) {
         contenedor.appendChild(div);
     });
 }
-
+/* 
 async function obtenerTareas() {
     const fecha = document.getElementById('fecha-seleccionada').value;
     try {
@@ -330,6 +330,24 @@ async function obtenerTareas() {
         
     } catch (error) {
         console.error("Error al traer datos:", error);
+    }
+} */
+
+
+async function obtenerTareas() {
+    const inputFecha = document.getElementById('fecha-seleccionada');
+    if (!inputFecha) return;
+
+    const fechaABuscar = inputFecha.value;
+
+    try {
+        const respuesta = await fetch(`https://mis-tareas-voz.onrender.com/tareas?fecha=${fechaABuscar}`);
+        const tareas = await respuesta.json();
+        
+        // Llamamos a la función que dibuja los checks en pantalla
+        actualizarInterfazTareas(tareas);
+    } catch (error) {
+        console.error("Error al cargar tareas del día:", error);
     }
 }
 
@@ -350,7 +368,7 @@ function mostrarSeccion(idSeccion) {
         activa.style.display = 'block';
     }
 }
-
+/* 
 // 2. INICIO INTELIGENTE
 window.addEventListener('DOMContentLoaded', () => {
     const selector = document.getElementById('fecha-seleccionada');
@@ -365,6 +383,26 @@ window.addEventListener('DOMContentLoaded', () => {
         selector.value = hoy;
         
         // 3. Recién ahí buscamos las tareas
+        obtenerTareas();
+    }
+}); */
+// Este bloque hace que la app "despierte" con la fecha de hoy y sus tareas
+window.addEventListener('DOMContentLoaded', () => {
+    const selector = document.getElementById('fecha-seleccionada');
+    
+    if (selector) {
+        // 1. Obtenemos la fecha de hoy en formato AAAA-MM-DD (Formato que entiende el input type="date")
+        const hoy = new Date();
+        const anio = hoy.getFullYear();
+        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+        const dia = String(hoy.getDate()).padStart(2, '0');
+        const fechaHoy = `${anio}-${mes}-${dia}`;
+        
+        // 2. Seteamos el calendario visualmente
+        selector.value = fechaHoy;
+        console.log("Sistema iniciado en la fecha: " + fechaHoy);
+
+        // 3. ¡IMPORTANTE! Llamamos a la función para que busque las tareas de hoy en Render
         obtenerTareas();
     }
 });
