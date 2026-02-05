@@ -192,19 +192,19 @@ async function obtenerTareas() {
 
 // 1. EL CEREBRO DE LAS PANTALLAS
 function mostrarSeccion(idSeccion) {
-    // Agregamos 'seccion-familia' a la lista
-    const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios', 'seccion-familia'];
+    // 1. Escondemos TODO primero (esto evita que se encimen)
+    const todas = document.querySelectorAll('.seccion-pantalla');
+    todas.forEach(s => s.style.display = 'none');
 
-    secciones.forEach(id => {
-        const elemento = document.getElementById(id);
-        if (elemento) {
-            elemento.style.display = 'none';
-        }
-    });
-
+    // 2. Mostramos solo la que queremos
     const activa = document.getElementById(idSeccion);
     if (activa) {
         activa.style.display = 'block';
+    }
+
+    // 3. Si volvemos al menú, refrescamos tareas por si acaso
+    if (idSeccion === 'seccion-tareas') {
+        obtenerTareas();
     }
 }
 

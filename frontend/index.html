@@ -6,272 +6,51 @@
     <title>Mi Lista de Tareas Pro</title>
   </head>
   <body>
-    <div id="menu-principal" class="seccion">
-      <h1>🎙️ Mis Tareas</h1>
-      <div class="grid-container">
-        <button
-          class="boton-gigante"
-          onclick="mostrarSeccion('seccion-tareas')"
-        >
-          <span>📝</span>
-          <p>Tareas</p>
-        </button>
-        <button
-          class="boton-gigante"
-          onclick="mostrarSeccion('seccion-radios')"
-        >
-          <span>📻</span>
-          <p>Radios</p>
-        </button>
-        <button
-          class="boton-gigante"
-          onclick="mostrarSeccion('seccion-familia')"
-        >
-          <span>👨‍👩‍👧‍👦</span>
-          <p>Familia</p>
-        </button>
-      </div>
+       <div id="menu-principal" class="seccion-pantalla">
+        <h1 class="titulo-app">🎙️ Hola Betty</h1>
+        <div class="contenedor-botones-menu">
+            <button class="boton-menu tareas" onclick="mostrarSeccion('seccion-tareas')">
+                <span class="emoji">📝</span> Tareas de Hoy
+            </button>
+            <button class="boton-menu radios" onclick="mostrarSeccion('seccion-radios')">
+                <span class="emoji">📻</span> Escuchar Radio
+            </button>
+            <button class="boton-menu familia" onclick="mostrarSeccion('seccion-familia')">
+                <span class="emoji">👨‍👩‍👧‍👦</span> Ver Familia
+            </button>
+        </div>
     </div>
 
-    <div id="seccion-tareas" class="seccion" style="display: none">
-      <h2>Hacemos juntos las Tareas</h2>
-      <button onclick="mostrarSeccion('menu-principal')">
-        ⬅️ Volver al Menú
-      </button>
-      <div id="lista-tareas"></div>
+    <div id="seccion-tareas" class="seccion-pantalla" style="display: none;">
+        <div class="cabecera-fija">
+            <button class="btn-volver" onclick="mostrarSeccion('menu-principal')">⬅️ Volver</button>
+            <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()">
+        </div>
 
-      
+        <div id="contenedor-editor" class="editor-magico" style="display: none;">
+            <input type="text" id="titulo-tarea" placeholder="¿Qué vamos a hacer?">
+            <div class="botones-fila">
+                <button id="btn-voz" class="btn-accion voz">🎤 Dictar</button>
+                <button onclick="guardarTareaManual()" class="btn-accion guardar">💾 Guardar</button>
+            </div>
+        </div>
+
+        <button class="btn-nueva-tarea" onclick="document.getElementById('contenedor-editor').style.display='block'">+ Agregar Actividad</button>
+        <div id="lista-tareas"></div>
     </div>
 
-    <div id="contenedor-editor" class="editor-punteado" style="display: none">
-      <h3>✍️ Agregar Nueva Actividad</h3>
-
-      <input type="text" id="titulo-tarea" placeholder="¿Qué hacemos juntos?" />
-      <textarea id="notas-tarea" placeholder="Notas..."></textarea>
-
-      <div class="botones-editor">
-        <button id="btn-voz" class="btn-dictar"><span>🎤</span> Dictar</button>
-        <button
-          id="btn-guardar"
-          class="btn-guardar"
-          onclick="guardarTareaManual()"
-        >
-          <span>💾</span> Guardar
-        </button>
-      </div>
+    <div id="seccion-radios" class="seccion-pantalla" style="display: none;">
+        <button class="btn-volver" onclick="mostrarSeccion('menu-principal')">⬅️ Volver</button>
+        <h2 class="subtitulo">Tus Radios Favoritas</h2>
+        <div id="contenedor-radios-dinamico"></div>
     </div>
 
-    <!-- <div class="controles-lista">
-      <button
-        onclick="
-          document.getElementById('contenedor-editor').style.display = 'block'
-        "
-      >
-        + Nueva Tarea
-      </button>
-      <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
-    </div> -->
-
-    <!-- <div id="lista-tareas"></div> -->
-
-    <div id="seccion-radios" class="seccion" style="display: none">
-      <button onclick="mostrarSeccion('menu-principal')" class="btn-volver">
-        ⬅️ Volver al Menú
-      </button>
-      <h2>Radios para Betty</h2>
-
-      <div class="contenedor-radios">
-        <div class="tarjeta-radio">
-          <div class="info-radio">
-            <span class="emoji-radio">📻</span>
-            <div>
-              <h3>Radio Clarín</h3>
-              <p>Tango y noticias</p>
-            </div>
-          </div>
-          <button
-            class="btn-enlace"
-            onclick="window.open('https://radioclarin.com.uy/', '_blank')"
-          >
-            Escuchar Ahora
-          </button>
-        </div>
-
-        <div class="tarjeta-radio">
-          <div class="info-radio">
-            <span class="emoji-radio">🎵</span>
-            <div>
-              <h3>Radio Monte Carlo</h3>
-              <p>Música y compañía</p>
-            </div>
-          </div>
-          <button
-            class="btn-enlace"
-            onclick="
-              window.open('https://www.radiomontecarlo.com.uy/', '_blank')
-            "
-          >
-            Escuchar Ahora
-          </button>
-        </div>
-
-        <div class="tarjeta-radio">
-          <div class="info-radio">
-            <span class="emoji-radio">🌟</span>
-            <div>
-              <h3>Radio Aspen</h3>
-              <p>Clásicos en inglés</p>
-            </div>
-          </div>
-          <button
-            class="btn-enlace"
-            onclick="window.open('https://fmaspen.com/', '_blank')"
-          >
-            Escuchar Ahora
-          </button>
-        </div>
-
-        <div class="tarjeta-radio">
-          <div class="info-radio">
-            <span class="emoji-radio">⚽</span>
-            <div>
-              <h3>Radio Sport 890</h3>
-              <p>Deportes y fútbol</p>
-            </div>
-          </div>
-          <button
-            class="btn-enlace"
-            onclick="window.open('https://www.sport890.com.uy/', '_blank')"
-          >
-            Escuchar Ahora
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div id="seccion-familia" class="seccion" style="display: none">
-      <button
-        onclick="mostrarSeccion('menu-principal')"
-        class="btn-volver-simple"
-      >
-        ⬅️ Volver
-      </button>
-      <h2>Nuestra Familia</h2>
-
-      <div class="grid-familia">
-        <div class="familiar-card">
-          <img
-            src="fotos/guillermo.jpg"
-            alt="Guillermo"
-            onclick="hablar('Yo soy Guillermo, tu hijo mayor')"
-          />
-          <p>Guillermo</p>
-          <button class="btn-audio" onclick="reproducirAudio('guillermo')">
-            Escuchar 🔊
-          </button>
-        </div>
-
-        <div class="familiar-card">
-          <img
-            src="fotos/diana.jpg"
-            alt="Diana"
-            onclick="hablar('Yo soy Diana, tu hija')"
-          />
-          <p>Diana</p>
-          <button class="btn-audio" onclick="reproducirAudio('diana')">
-            Escuchar 🔊
-          </button>
-        </div>
-        <div class="familiar-card">
-          <img
-            src="fotos/anibal.jpg"
-            alt="Aníbal"
-            onclick="hablar('Yo soy Aníbal, tu hijo menor')"
-          />
-          <p>Aníbal</p>
-          <button class="btn-audio" onclick="reproducirAudio('anibal')">
-            Escuchar 🔊
-          </button>
-        </div>
-
-        <div class="familiar-card">
-          <img
-            src="fotos/agustina.jpg"
-            alt="Agustina"
-            onclick="hablar('Yo soy Agustina, tu nuera, esposa de Guillermo')"
-          />
-          <p>Agustina</p>
-          <button class="btn-audio" onclick="reproducirAudio('agustina')">
-            Escuchar 🔊
-          </button>
-        </div>
-
-        <div class="familiar-card">
-          <img
-            src="fotos/thiaguito.jpg"
-            alt="Thiaguito"
-            onclick="
-              hablar('Yo soy Thiaguito, tu nieto, hijo de Guille y Agustina')
-            "
-          />
-          <p>Thiaguito</p>
-          <button class="btn-audio" onclick="reproducirAudio('thiaguito')">
-            Escuchar 🔊
-          </button>
-        </div>
-
-        <div class="familiar-card">
-          <img
-            src="fotos/brunita.jpg"
-            alt="Brunita"
-            onclick="
-              hablar('Yo soy Brunita, tu nieta, hija de Guille y Agustina')
-            "
-          />
-          <p>Brunita</p>
-          <button class="btn-audio" onclick="reproducirAudio('brunita')">
-            Escuchar 🔊
-          </button>
-        </div>
-
-        <div class="familiar-card">
-          <img
-            src="fotos/arturo.jpg"
-            alt="Arturo"
-            onclick="hablar('Yo soy Arturo, esposo de Diana ')"
-          />
-          <p>Arturo</p>
-          <button class="btn-audio" onclick="reproducirAudio('arturo')">
-            Escuchar 🔊
-          </button>
-        </div>
-
-        <div class="familiar-card">
-          <img
-            src="fotos/maximo.jpg"
-            alt="Máximo"
-            onclick="hablar('Yo soy Máximo, tu nieto, hijo de Diana y Arturo')"
-          />
-          <p>Máximo</p>
-          <button class="btn-audio" onclick="reproducirAudio('maximo')">
-            Escuchar 🔊
-          </button>
-        </div>
-
-        <div class="familiar-card">
-          <img
-            src="fotos/valentina.jpg"
-            alt="Valentina"
-            onclick="hablar('Yo soy Valentina, tu nuera, la novia de Aníbal')"
-          />
-          <p>Valentina</p>
-          <button class="btn-audio" onclick="reproducirAudio('valentina')">
-            Escuchar 🔊
-          </button>
-        </div>
-      </div>
+    <div id="seccion-familia" class="seccion-pantalla" style="display: none;">
+        <button class="btn-volver" onclick="mostrarSeccion('menu-principal')">⬅️ Volver</button>
+        <h2 class="subtitulo">Nuestra Familia</h2>
+        <div id="grid-familia-vibrante"></div>
     </div>
 
     <script src="app.js"></script>
-  </body>
+</body>
 </html>

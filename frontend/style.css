@@ -411,3 +411,93 @@ textarea {
     color: #888;
     font-style: italic;
 }
+
+:root {
+    --color-fondo: #f0f4f8;
+    --color-tareas: #3498db;
+    --color-radios: #e67e22;
+    --color-familia: #9b59b6;
+    --color-verde: #27ae60;
+}
+
+body {
+    background-color: var(--color-fondo);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 10px;
+}
+
+/* Contenedor de Pantalla Completa */
+.seccion-pantalla {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Botones Gigantes del Menú */
+.contenedor-botones-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.boton-menu {
+    border: none;
+    border-radius: 25px;
+    padding: 30px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.boton-menu.tareas { background: linear-gradient(135deg, #3498db, #2980b9); }
+.boton-menu.radios { background: linear-gradient(135deg, #e67e22, #d35400); }
+.boton-menu.familia { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+
+/* Tarjetas de Tareas */
+.tarea-card {
+    background: white;
+    margin: 15px 0;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.tarea-card input[type="checkbox"] {
+    width: 35px;
+    height: 35px;
+    margin-right: 20px;
+}
+
+/* Estilo del Editor */
+.editor-magico {
+    background: white;
+    border: 3px dashed var(--color-tareas);
+    padding: 20px;
+    border-radius: 25px;
+    margin-bottom: 20px;
+}
+
+#titulo-tarea {
+    width: 90%;
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
