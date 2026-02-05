@@ -34,41 +34,42 @@
     </div>
 
     <div id="seccion-tareas" class="seccion" style="display: none">
-       <h2>Hacemos juntos las Tareas</h2>
+      <h2>Hacemos juntos las Tareas</h2>
       <button onclick="mostrarSeccion('menu-principal')">
         ⬅️ Volver al Menú
       </button>
-     
-
-      <div id="contenedor-editor" class="editor-punteado" style="display: none;">
-    <h3>✍️ Agregar Nueva Actividad</h3>
-    
-    <input type="text" id="titulo-tarea" placeholder="¿Qué hacemos juntos?">
-    <textarea id="notas-tarea" placeholder="Notas..."></textarea>
-
-    <div class="botones-editor">
-        <button id="btn-voz" class="btn-dictar">
-            <span>🎤</span> Dictar
-        </button>
-        <button id="btn-guardar" class="btn-guardar" onclick="guardarTareaManual()">
-            <span>💾</span> Guardar
-        </button>
     </div>
-</div>
 
-      <div class="controles-lista">
+    <div id="contenedor-editor" class="editor-punteado" style="display: none">
+      <h3>✍️ Agregar Nueva Actividad</h3>
+
+      <input type="text" id="titulo-tarea" placeholder="¿Qué hacemos juntos?" />
+      <textarea id="notas-tarea" placeholder="Notas..."></textarea>
+
+      <div class="botones-editor">
+        <button id="btn-voz" class="btn-dictar"><span>🎤</span> Dictar</button>
         <button
-          onclick="
-            document.getElementById('contenedor-editor').style.display = 'block'
-          "
+          id="btn-guardar"
+          class="btn-guardar"
+          onclick="guardarTareaManual()"
         >
-          + Nueva Tarea
+          <span>💾</span> Guardar
         </button>
-        <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
       </div>
-
-      <div id="lista-tareas">
     </div>
+
+    <div class="controles-lista">
+      <button
+        onclick="
+          document.getElementById('contenedor-editor').style.display = 'block'
+        "
+      >
+        + Nueva Tarea
+      </button>
+      <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
+    </div>
+
+    <div id="lista-tareas"></div>
 
     <div id="seccion-radios" class="seccion" style="display: none">
       <button onclick="mostrarSeccion('menu-principal')" class="btn-volver">
@@ -144,6 +145,7 @@
         </div>
       </div>
     </div>
+
     <div id="seccion-familia" class="seccion" style="display: none">
       <button
         onclick="mostrarSeccion('menu-principal')"
@@ -155,7 +157,11 @@
 
       <div class="grid-familia">
         <div class="familiar-card">
-          <img src="fotos/guillermo.jpg" alt="Guillermo" onclick="hablar('Yo soy Guillermo, tu hijo mayor')" />
+          <img
+            src="fotos/guillermo.jpg"
+            alt="Guillermo"
+            onclick="hablar('Yo soy Guillermo, tu hijo mayor')"
+          />
           <p>Guillermo</p>
           <button class="btn-audio" onclick="reproducirAudio('guillermo')">
             Escuchar 🔊
@@ -163,14 +169,22 @@
         </div>
 
         <div class="familiar-card">
-          <img src="fotos/diana.jpg" alt="Diana" onclick="hablar('Yo soy Diana, tu hija')" />
+          <img
+            src="fotos/diana.jpg"
+            alt="Diana"
+            onclick="hablar('Yo soy Diana, tu hija')"
+          />
           <p>Diana</p>
           <button class="btn-audio" onclick="reproducirAudio('diana')">
             Escuchar 🔊
           </button>
         </div>
         <div class="familiar-card">
-          <img src="fotos/anibal.jpg" alt="Aníbal" onclick="hablar('Yo soy Aníbal, tu hijo menor')" />
+          <img
+            src="fotos/anibal.jpg"
+            alt="Aníbal"
+            onclick="hablar('Yo soy Aníbal, tu hijo menor')"
+          />
           <p>Aníbal</p>
           <button class="btn-audio" onclick="reproducirAudio('anibal')">
             Escuchar 🔊
@@ -178,7 +192,11 @@
         </div>
 
         <div class="familiar-card">
-          <img src="fotos/agustina.jpg" alt="Agustina" onclick="hablar('Yo soy Agustina, tu nuera, esposa de Guillermo')" />
+          <img
+            src="fotos/agustina.jpg"
+            alt="Agustina"
+            onclick="hablar('Yo soy Agustina, tu nuera, esposa de Guillermo')"
+          />
           <p>Agustina</p>
           <button class="btn-audio" onclick="reproducirAudio('agustina')">
             Escuchar 🔊
@@ -186,7 +204,13 @@
         </div>
 
         <div class="familiar-card">
-          <img src="fotos/thiaguito.jpg" alt="Thiaguito" onclick="hablar('Yo soy Thiaguito, tu nieto, hijo de Guille y Agustina')" />
+          <img
+            src="fotos/thiaguito.jpg"
+            alt="Thiaguito"
+            onclick="
+              hablar('Yo soy Thiaguito, tu nieto, hijo de Guille y Agustina')
+            "
+          />
           <p>Thiaguito</p>
           <button class="btn-audio" onclick="reproducirAudio('thiaguito')">
             Escuchar 🔊
@@ -194,24 +218,37 @@
         </div>
 
         <div class="familiar-card">
-          <img src="fotos/brunita.jpg" alt="Brunita" onclick="hablar('Yo soy Brunita, tu nieta, hija de Guille y Agustina')" />
+          <img
+            src="fotos/brunita.jpg"
+            alt="Brunita"
+            onclick="
+              hablar('Yo soy Brunita, tu nieta, hija de Guille y Agustina')
+            "
+          />
           <p>Brunita</p>
-          <button class="btn-audio" onclick="reproducirAudio('brunita') ">
+          <button class="btn-audio" onclick="reproducirAudio('brunita')">
             Escuchar 🔊
           </button>
         </div>
 
         <div class="familiar-card">
-          <img src="fotos/arturo.jpg" alt="Arturo" onclick="hablar('Yo soy Arturo, esposo de Diana ')" />
+          <img
+            src="fotos/arturo.jpg"
+            alt="Arturo"
+            onclick="hablar('Yo soy Arturo, esposo de Diana ')"
+          />
           <p>Arturo</p>
           <button class="btn-audio" onclick="reproducirAudio('arturo')">
             Escuchar 🔊
           </button>
         </div>
 
-        
         <div class="familiar-card">
-          <img src="fotos/maximo.jpg" alt="Máximo" onclick="hablar('Yo soy Máximo, tu nieto, hijo de Diana y Arturo')" />
+          <img
+            src="fotos/maximo.jpg"
+            alt="Máximo"
+            onclick="hablar('Yo soy Máximo, tu nieto, hijo de Diana y Arturo')"
+          />
           <p>Máximo</p>
           <button class="btn-audio" onclick="reproducirAudio('maximo')">
             Escuchar 🔊
@@ -219,7 +256,11 @@
         </div>
 
         <div class="familiar-card">
-          <img src="fotos/valentina.jpg" alt="Valentina" onclick="hablar('Yo soy Valentina, tu nuera, la novia de Aníbal')" />
+          <img
+            src="fotos/valentina.jpg"
+            alt="Valentina"
+            onclick="hablar('Yo soy Valentina, tu nuera, la novia de Aníbal')"
+          />
           <p>Valentina</p>
           <button class="btn-audio" onclick="reproducirAudio('valentina')">
             Escuchar 🔊
