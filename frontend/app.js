@@ -49,7 +49,7 @@ recognition.onresult = (event) => {
 };
 
 // Función para guardar lo que esté en los campos (Voz editada o Texto manual)
-document.getElementById("btn-guardar").onclick = async () => {
+/* document.getElementById("btn-guardar").onclick = async () => {
   const titulo = document.getElementById("tarea-titulo").value;
   const notas = document.getElementById("tarea-notas").value;
 
@@ -72,7 +72,7 @@ document.getElementById("btn-guardar").onclick = async () => {
     console.error("Error al guardar:", error);
   }
 };
-3;
+ */
 // 4. Iniciar el micrófono
 btn.onclick = () => {
   recognition.start();
