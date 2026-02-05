@@ -48,31 +48,6 @@ recognition.onresult = (event) => {
   document.getElementById("tarea-titulo").value = voz;
 };
 
-// Función para guardar lo que esté en los campos (Voz editada o Texto manual)
-/* document.getElementById("btn-guardar").onclick = async () => {
-  const titulo = document.getElementById("tarea-titulo").value;
-  const notas = document.getElementById("tarea-notas").value;
-
-  if (!titulo) return alert("El título es obligatorio");
-
-  try {
-    const response = await fetch(urlBase, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ titulo, notas, chequeado: false }),
-    });
-
-    if (response.ok) {
-      // Limpiamos los campos y refrescamos la lista
-      document.getElementById("tarea-titulo").value = "";
-      document.getElementById("tarea-notas").value = "";
-      obtenerTareas();
-    }
-  } catch (error) {
-    console.error("Error al guardar:", error);
-  }
-};
- */
 // 4. Iniciar el micrófono
 btn.onclick = () => {
   recognition.start();
@@ -169,7 +144,7 @@ function detenerMusica() {
 
 
 // ÚNICA FUNCIÓN PARA DIBUJAR EN PANTALLA
-function actualizarInterfazTareas(tareas) {
+/* function actualizarInterfazTareas(tareas) {
 
     const contenedor = document.getElementById('lista-tareas');
     if (!contenedor) return;
@@ -195,7 +170,7 @@ function actualizarInterfazTareas(tareas) {
         `;
         contenedor.appendChild(div);
     });
-}
+} */
 
 
 async function obtenerTareas() {
@@ -302,3 +277,42 @@ const selector = document.getElementById('fecha-seleccionada');
         document.getElementById("titulo-tarea").value = voz;
     };
 });
+
+// 1. Cambiamos el nombre de la función para que coincida con el error
+async function alternarTarea(id, estado) {
+  try {
+    await fetch(`${urlBase}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chequeado: estado }),
+    });
+    
+    if (estado === true) {
+      hablar("¡Qué bien! Terminamos esta actividad.");
+    }
+
+    obtenerTareas(); // Refrescamos la lista
+  } catch (error) {
+    console.error("Error al actualizar tarea:", error);
+  }
+}
+
+// 2. Asegúrate que la interfaz llame a 'alternarTarea'
+function actualizarInterfazTareas(tareas) {
+    const contenedor = document.getElementById('lista-tareas');
+    if (!contenedor) return;
+    contenedor.innerHTML = "";
+
+    tareas.forEach(tarea => {
+        const div = document.createElement('div');
+        div.className = 'tarea-card';
+        div.innerHTML = `
+            <div class="tarea-info">
+                <input type="checkbox" ${tarea.chequeado ? 'checked' : ''} 
+                       onchange="alternarTarea('${tarea._id}', this.checked)">
+                <span class="${tarea.chequeado ? 'completada' : ''}">${tarea.titulo}</span>
+            </div>
+        `;
+        contenedor.appendChild(div);
+    });
+}

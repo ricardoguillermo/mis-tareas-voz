@@ -405,3 +405,9 @@ textarea {
     cursor: pointer;
     flex: 1;
 }
+
+.completada {
+    text-decoration: line-through;
+    color: #888;
+    font-style: italic;
+}
