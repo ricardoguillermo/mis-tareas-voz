@@ -38,6 +38,9 @@
       <button onclick="mostrarSeccion('menu-principal')">
         ⬅️ Volver al Menú
       </button>
+      <div id="lista-tareas"></div>
+
+      
     </div>
 
     <div id="contenedor-editor" class="editor-punteado" style="display: none">
@@ -58,7 +61,7 @@
       </div>
     </div>
 
-    <div class="controles-lista">
+    <!-- <div class="controles-lista">
       <button
         onclick="
           document.getElementById('contenedor-editor').style.display = 'block'
@@ -67,9 +70,9 @@
         + Nueva Tarea
       </button>
       <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
-    </div>
+    </div> -->
 
-    <div id="lista-tareas"></div>
+    <!-- <div id="lista-tareas"></div> -->
 
     <div id="seccion-radios" class="seccion" style="display: none">
       <button onclick="mostrarSeccion('menu-principal')" class="btn-volver">
