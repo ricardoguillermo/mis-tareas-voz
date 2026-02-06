@@ -194,7 +194,7 @@ async function obtenerTareas() {
 function mostrarSeccion(idSeccion) {
     // Agregamos 'seccion-familia' a la lista
     const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios', 'seccion-familia'];
-
+    // document.getElementById("lista-tareas").style.display = "none";
     secciones.forEach(id => {
         const elemento = document.getElementById(id);
         if (elemento) {
