@@ -192,19 +192,19 @@ async function obtenerTareas() {
 
 // 1. EL CEREBRO DE LAS PANTALLAS
 function mostrarSeccion(idSeccion) {
-    // 1. Escondemos TODO primero (esto evita que se encimen)
-    const todas = document.querySelectorAll('.seccion-pantalla');
-    todas.forEach(s => s.style.display = 'none');
+    // Agregamos 'seccion-familia' a la lista
+    const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios', 'seccion-familia'];
 
-    // 2. Mostramos solo la que queremos
+    secciones.forEach(id => {
+        const elemento = document.getElementById(id);
+        if (elemento) {
+            elemento.style.display = 'none';
+        }
+    });
+
     const activa = document.getElementById(idSeccion);
     if (activa) {
         activa.style.display = 'block';
-    }
-
-    // 3. Si volvemos al menú, refrescamos tareas por si acaso
-    if (idSeccion === 'seccion-tareas') {
-        obtenerTareas();
     }
 }
 
@@ -302,6 +302,13 @@ function actualizarInterfazTareas(tareas) {
     const contenedor = document.getElementById('lista-tareas');
     if (!contenedor) return;
     contenedor.innerHTML = "";
+
+console.log("Actualizando interfaz con tareas:", tareas);
+    if (tareas.length === 0) {
+        contenedor.innerHTML = '<p class="mensaje-vacio">No hay tareas para este día.</p>';
+        return;
+    }
+    
 
     tareas.forEach(tarea => {
         const div = document.createElement('div');
