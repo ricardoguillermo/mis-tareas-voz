@@ -104,7 +104,8 @@ function volverAlMenu() {
   // 1. Escondemos todas las secciones de contenido
   document.getElementById("lista-tareas").style.display = "none";
   document.getElementById("seccion-familia").style.display = "none";
-  document.getElementById("seccion-musica").style.display = "none"; // Preparamos la nueva
+  document.getElementById("seccion-musica").style.display = "none"; 
+  document.getElementById("seccion-ayudas").style.display = "none"; 
 
   // 2. IMPORTANTE: Cerramos el panel de edición por si quedó abierto
   document.getElementById("seccion-editor").style.display = "none";
@@ -143,35 +144,6 @@ function detenerMusica() {
 }
 
 
-// ÚNICA FUNCIÓN PARA DIBUJAR EN PANTALLA
-/* function actualizarInterfazTareas(tareas) {
-
-    const contenedor = document.getElementById('lista-tareas');
-    if (!contenedor) return;
-
-    // Limpiamos lo que haya viejo
-    contenedor.innerHTML = "";
-
-    if (tareas.length === 0) {
-        contenedor.innerHTML = '<p class="mensaje-vacio">No hay tareas para este día.</p>';
-        return;
-    }
-
-    // Dibujamos las nuevas
-    tareas.forEach(tarea => {
-        const div = document.createElement('div');
-        div.className = 'tarea-card';
-        div.innerHTML = `
-            <div class="tarea-info">
-                <input type="checkbox" ${tarea.chequeado ? 'checked' : ''} 
-                       onchange="alternarTarea('${tarea._id}', this.checked)">
-                <span class="${tarea.chequeado ? 'completada' : ''}">${tarea.titulo}</span>
-            </div>
-        `;
-        contenedor.appendChild(div);
-    });
-} */
-
 
 async function obtenerTareas() {
     const inputFecha = document.getElementById('fecha-seleccionada');
@@ -193,8 +165,7 @@ async function obtenerTareas() {
 // 1. EL CEREBRO DE LAS PANTALLAS
 function mostrarSeccion(idSeccion) {
     // Agregamos 'seccion-familia' a la lista
-    const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios', 'seccion-familia'];
-    // document.getElementById("lista-tareas").style.display = "none";
+    const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios', 'seccion-familia','seccion-ayudas'];
     secciones.forEach(id => {
         const elemento = document.getElementById(id);
         if (elemento) {
