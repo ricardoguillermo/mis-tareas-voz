@@ -102,7 +102,7 @@ function pedirClave() {
 // Modificamos volverAlMenu para que siempre vuelva a esconder el editor
 function volverAlMenu() {
   // 1. Escondemos todas las secciones de contenido
-  document.getElementById("contenedor-lista").style.display = "none";
+  document.getElementById("seccion-tareas").style.display = "none";
   document.getElementById("seccion-familia").style.display = "none";
   document.getElementById("seccion-musica").style.display = "none"; // Preparamos la nueva
 
@@ -308,7 +308,7 @@ console.log("Actualizando interfaz con tareas:", tareas);
         contenedor.innerHTML = '<p class="mensaje-vacio">No hay tareas para este día.</p>';
         return;
     }
-    
+
 
     tareas.forEach(tarea => {
         const div = document.createElement('div');
