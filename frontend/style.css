@@ -473,7 +473,7 @@ body {
 
 /* Tarjetas de Tareas */
 .tarea-card {
-    background: white;
+    background: rgb(241, 206, 206);
     margin: 15px 0;
     padding: 20px;
     border-radius: 20px;

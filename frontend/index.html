@@ -6,6 +6,15 @@
     <title>Mi Lista de Tareas Pro</title>
   </head>
   <body>
+    <div class="cabecera-fija">
+    <button class="btn-accion" onclick="abrirEditorSeguro()">+ Nueva Tarea</button>
+    <button class="btn-accion rutina" onclick="cargarRutinaRemedios()">💊 Cargar Remedios</button>
+</div>
+
+<div id="seccion-compras">
+    <h3 class="subtitulo">🛒 Lista del Supermercado</h3>
+    <div id="lista-compras"></div>
+</div>
     <div id="menu-principal" class="seccion">
       <h1>🎙️ Mis Tareas</h1>
       <div class="grid-container">

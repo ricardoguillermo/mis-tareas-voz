@@ -38,7 +38,7 @@ async function guardarTareaEnNube(texto) {
   }
 }
 
-obtenerTareas();
+obtenerTareas(); //solita?
 
 // 3. Evento cuando terminas de hablar
 
@@ -85,7 +85,17 @@ function hablar(texto) {
   window.speechSynthesis.speak(mensaje);
 }
 
+function abrirEditorSeguro() {
+    const clave = prompt("Introduce la clave de familiar para agregar tareas:");
+    const autorizados = ["Diana_hija", "Ricardo_esposo", "Aníbal_hijo_menor", "Guillermo_hijo_mayor"];
 
+    if (autorizados.includes(clave)) {
+        document.getElementById('contenedor-editor').style.display = 'block';
+        hablar("Modo edición activado.");
+    } else {
+        alert("Clave incorrecta. Solo la familia puede agregar tareas.");
+    }
+}
  
 function pedirClave() {
   const clave = prompt("Introduce la clave de familiar para editar:");
@@ -269,7 +279,7 @@ async function alternarTarea(id, estado) {
 }
 
 // 2. Asegúrate que la interfaz llame a 'alternarTarea'
-function actualizarInterfazTareas(tareas) {
+/* function actualizarInterfazTareas(tareas) {
     const contenedor = document.getElementById('lista-tareas');
     if (!contenedor) return;
     contenedor.innerHTML = "";
@@ -292,5 +302,56 @@ console.log("Actualizando interfaz con tareas:", tareas);
             </div>
         `;
         contenedor.appendChild(div);
+    });
+} */
+
+async function cargarRutinaRemedios() {
+    const fecha = document.getElementById('fecha-seleccionada').value;
+    const remedios = [
+        "💊 Remedio Presión (Mañana)",
+        "💊 Remedio Corazón (Almuerzo)",
+        "💊 Gotas ojos (Noche)"
+    ];
+
+    hablar("Cargando los remedios del día.");
+
+    for (const titulo of remedios) {
+        await fetch(urlBase, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ 
+                titulo: titulo, 
+                fecha_creacion: fecha, 
+                chequeado: false 
+            }),
+        });
+    }
+    obtenerTareas(); // Refresca la lista al terminar
+}
+
+function actualizarInterfazTareas(tareas) {
+    const contenedor = document.getElementById('lista-tareas');
+    const contenedorCompras = document.getElementById('lista-compras'); // ¡Crea este div en tu HTML!
+    
+    contenedor.innerHTML = "";
+    if(contenedorCompras) contenedorCompras.innerHTML = "";
+
+    tareas.forEach(tarea => {
+        const esCompra = tarea.titulo.toLowerCase().startsWith("comprar") || 
+                         tarea.titulo.toLowerCase().startsWith("compra");
+
+        const div = document.createElement('div');
+        div.className = esCompra ? 'tarea-card compra' : 'tarea-card';
+        div.innerHTML = `
+            <span>${esCompra ? '🛒' : '📌'} ${tarea.titulo}</span>
+            <input type="checkbox" onchange="alternarTarea('${tarea._id}', this.checked)">
+        `;
+
+        // Si es compra, lo mandamos a la lista de compras, si no, a tareas
+        if (esCompra && contenedorCompras) {
+            contenedorCompras.appendChild(div);
+        } else {
+            contenedor.appendChild(div);
+        }
     });
 }
