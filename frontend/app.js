@@ -116,6 +116,9 @@ function volverAlMenu() {
   document.getElementById("seccion-familia").style.display = "none";
   document.getElementById("seccion-musica").style.display = "none"; 
   document.getElementById("seccion-ayudas").style.display = "none"; 
+//   lo puse yo
+document.getElementById("seccion-compras").style.display = "none";
+document.getElementById("cabecera-fija").style.display = "none"; // Aseguramos que el editor también se esconda
 
   // 2. IMPORTANTE: Cerramos el panel de edición por si quedó abierto
   document.getElementById("seccion-editor").style.display = "none";
