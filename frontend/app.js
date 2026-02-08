@@ -392,3 +392,14 @@ function actualizarInterfazTareas(tareas) {
     });
 }
 
+function enviarListaWhatsApp() {
+    const tareas = document.querySelectorAll('#lista-compras .tarea-card span');
+    let texto = "*Lista de Supermercado - " + document.getElementById('fecha-seleccionada').value + "*\n";
+    
+    tareas.forEach(t => {
+        texto += "- " + t.innerText.replace('🛒', '').trim() + "\n";
+    });
+
+    const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
+    window.open(url, '_blank');
+}
