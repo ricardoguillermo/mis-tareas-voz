@@ -38,7 +38,7 @@ async function guardarTareaEnNube(texto) {
   }
 }
 
-obtenerTareas(); //solita?
+// obtenerTareas(); //solita?
 
 // 3. Evento cuando terminas de hablar
 
