@@ -176,7 +176,7 @@ async function obtenerTareas() {
 }
 
 // 1. EL CEREBRO DE LAS PANTALLAS
-function mostrarSeccion(idSeccion) {
+/* function mostrarSeccion(idSeccion) {
     // Agregamos 'seccion-familia' a la lista
     const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios', 'seccion-familia','seccion-ayudas'];
     secciones.forEach(id => {
@@ -189,6 +189,39 @@ function mostrarSeccion(idSeccion) {
     const activa = document.getElementById(idSeccion);
     if (activa) {
         activa.style.display = 'block';
+    }
+}
+ */
+
+function mostrarSeccion(idSeccion) {
+    // 1. Agregamos 'seccion-compras' a la lista de secciones a ocultar
+    const secciones = [
+        'menu-principal', 
+        'seccion-tareas', 
+        'seccion-radios', 
+        'seccion-familia', 
+        'seccion-compras' // <--- Asegúrate de que coincida con el ID en tu HTML
+    ];
+
+    secciones.forEach(id => {
+        const elemento = document.getElementById(id);
+        if (elemento) {
+            elemento.style.display = 'none';
+        }
+    });
+
+    // 2. Mostramos la sección activa
+    const activa = document.getElementById(idSeccion);
+    if (activa) {
+        activa.style.display = 'block';
+    }
+
+    // 3. Si entramos a tareas, mostramos también la lista de compras 
+    // pero solo como un módulo dentro de esa sección si así lo prefieres
+    if (idSeccion === 'seccion-tareas') {
+        const compras = document.getElementById('seccion-compras');
+        if (compras) compras.style.display = 'block';
+        obtenerTareas(); 
     }
 }
 
@@ -228,7 +261,7 @@ async function guardarTareaManual() {
 
 // Conexión del Micrófono (dentro del DOMContentLoaded)
 window.addEventListener('DOMContentLoaded', () => {
-
+mostrarSeccion('menu-principal');
 const selector = document.getElementById('fecha-seleccionada');
     
     if (selector) {
@@ -358,3 +391,4 @@ function actualizarInterfazTareas(tareas) {
         }
     });
 }
+
