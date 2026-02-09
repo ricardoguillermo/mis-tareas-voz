@@ -385,7 +385,9 @@ function actualizarInterfazTareas(tareas) {
 
         // Si es compra, lo mandamos a la lista de compras, si no, a tareas
         if (esCompra && contenedorCompras) {
+            console.log("Agregando a lista de compras:", tarea.titulo);
             contenedorCompras.appendChild(div);
+            
         } else {
             contenedor.appendChild(div);
         }
