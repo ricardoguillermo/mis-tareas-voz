@@ -368,7 +368,7 @@ async function cargarRutinaRemedios() {
 function actualizarInterfazTareas(tareas) {
     const contenedor = document.getElementById('lista-tareas');
     const contenedorCompras = document.getElementById('lista-compras'); // ¡Crea este div en tu HTML!
-    
+    console.log("Actualizando interfaz con tareas:", tareas);
     contenedor.innerHTML = "";
     if(contenedorCompras) contenedorCompras.innerHTML = "";
 
