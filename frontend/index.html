@@ -7,17 +7,21 @@
   </head>
   <body>
     <div class="cabecera-fija">
-    <button class="btn-accion" onclick="abrirEditorSeguro()">+ Nueva Tarea</button>
-    <button class="btn-accion rutina" onclick="cargarRutinaRemedios()">💊 Cargar Remedios</button>
-</div>
+      <button class="btn-accion" onclick="abrirEditorSeguro()">
+        + Nueva Tarea
+      </button>
+      <button class="btn-accion rutina" onclick="cargarRutinaRemedios()">
+        💊 Cargar Remedios
+      </button>
+    </div>
 
-<div id="seccion-compras" style="display: none;">
-    <h3 class="subtitulo">🛒 Lista del Supermercado</h3>
-    <div id="lista-compras"></div>
-    <button class="btn-whatsapp" onclick="enviarListaWhatsApp()">
-    Ver en mi Celular (WhatsApp) 📲
-</button>
-</div>
+    <div id="seccion-compras" style="display: none">
+      <h3 class="subtitulo">🛒 Lista del Supermercado</h3>
+      <div id="lista-compras"></div>
+      <button class="btn-whatsapp" onclick="enviarListaWhatsApp()">
+        Ver en mi Celular (WhatsApp) 📲
+      </button>
+    </div>
     <div id="menu-principal" class="seccion">
       <h1>🎙️ Mis Tareas</h1>
       <div class="grid-container">
@@ -43,15 +47,16 @@
           <p>Familia</p>
         </button>
 
-<button
+       <!--  <button
           class="boton-gigante"
           onclick="mostrarSeccion('seccion-ayudas')"
         >
           <span>😀​</span>
           <p>Ayudas</p>
-        </button>
-
-
+        </button> -->
+        <button class="boton-menu ayuda" onclick="mostrarSeccion('seccion-ayuda')">
+      <span class="emoji">🍳</span> Cocina y Ayuda
+    </button>
       </div>
     </div>
 
@@ -63,33 +68,39 @@
       <!-- <div id="lista-tareas"></div> -->
 
       <div id="contenedor-editor" class="editor-punteado" style="display: none">
-      <h3>✍️ Agregar Nueva Actividad</h3>
+        <h3>✍️ Agregar Nueva Actividad</h3>
 
-      <input type="text" id="titulo-tarea" placeholder="¿Qué hacemos juntos?" />
-      <textarea id="notas-tarea" placeholder="Notas..."></textarea>
+        <input
+          type="text"
+          id="titulo-tarea"
+          placeholder="¿Qué hacemos juntos?"
+        />
+        <textarea id="notas-tarea" placeholder="Notas..."></textarea>
 
-      <div class="botones-editor">
-        <button id="btn-voz" class="btn-dictar"><span>🎤</span> Dictar</button>
-        <button
-          id="btn-guardar"
-          class="btn-guardar"
-          onclick="guardarTareaManual()"
-        >
-          <span>💾</span> Guardar
-        </button>
-      </div>
+        <div class="botones-editor">
+          <button id="btn-voz" class="btn-dictar">
+            <span>🎤</span> Dictar
+          </button>
+          <button
+            id="btn-guardar"
+            class="btn-guardar"
+            onclick="guardarTareaManual()"
+          >
+            <span>💾</span> Guardar
+          </button>
+        </div>
       </div>
 
       <div class="controles-lista">
-      <button
-        onclick="
-          document.getElementById('contenedor-editor').style.display = 'block'
-        "
-      >
-        + Nueva Tarea
-      </button>
-      <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
-      </div> 
+        <button
+          onclick="
+            document.getElementById('contenedor-editor').style.display = 'block'
+          "
+        >
+          + Nueva Tarea
+        </button>
+        <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
+      </div>
 
       <div id="lista-tareas"></div>
     </div>
@@ -169,10 +180,7 @@
     </div>
 
     <div id="seccion-familia" class="seccion" style="display: none">
-      <button
-        onclick="mostrarSeccion('menu-principal')"
-        class="btn-volver"
-      >
+      <button onclick="mostrarSeccion('menu-principal')" class="btn-volver">
         ⬅️ Volver al menú principal
       </button>
       <h2>Nuestra Familia</h2>
@@ -291,18 +299,73 @@
       </div>
     </div>
 
-    <div id="seccion-ayudas" class="seccion" style="display: none">
+    <!-- <div id="seccion-ayudas" class="seccion" style="display: none">
       <button onclick="mostrarSeccion('menu-principal')" class="btn-volver">
         ⬅️ Volver al Menú principal
       </button>
       <div id="medidas"><h2>Medidas para la cocina y algo más ...</h2></div>
-      <div id="recetas-faciles"><h2>Recetas fáciles para hacer juntos...</h2>
+      <div id="recetas-faciles">
+        <h2>Recetas fáciles para hacer juntos...</h2>
         <h3>Arroz con curry</h3>
         <h3>Crema diet</h3>
       </div>
+    </div> -->
+    
 
+    <div id="seccion-ayuda" class="seccion-pantalla" style="display: none">
+      <button class="btn-volver" onclick="mostrarSeccion('menu-principal')">
+        ⬅️ Volver
+      </button>
+      <h2 class="subtitulo">Ayudas para el día a día</h2>
+
+      <div class="acordeon-container">
+        <div class="acordeon-item">
+          <div
+            class="acordeon-cabecera"
+            onclick="toggleAcordeon('ayuda-medidas')"
+          >
+            <h3>📏 Medidas para la cocina</h3>
+            <span>➕</span>
+          </div>
+          <div id="ayuda-medidas" class="acordeon-contenido">
+            <p>1 taza = 250ml</p>
+            <p>1 cucharada = 15ml</p>
+            <img
+              src="fotos/medidas-cocina.jpg"
+              alt="Tabla de medidas"
+              style="width: 100%; border-radius: 10px"
+            />
+          </div>
+        </div>
+
+        <div class="acordeon-item">
+          <div
+            class="acordeon-cabecera"
+            onclick="toggleAcordeon('ayuda-recetas')"
+          >
+            <h3>🍲 Recetas fáciles</h3>
+            <span>➕</span>
+          </div>
+          <div id="ayuda-recetas" class="acordeon-contenido">
+            <div class="receta">
+              <h4>Arroz con curry</h4>
+              <p>
+                Hervir arroz, agregar una pizca de curry y trocitos de pollo
+                saltado.
+              </p>
+            </div>
+            <hr />
+            <div class="receta">
+              <h4>Crema diet</h4>
+              <p>
+                Mezclar leche descremada con maicena y esencia de vainilla a
+                fuego lento.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
     <script src="app.js"></script>
-  </body> 
+  </body>
 </html>
