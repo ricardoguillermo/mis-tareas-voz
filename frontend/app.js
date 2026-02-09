@@ -403,3 +403,27 @@ function enviarListaWhatsApp() {
     const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
     window.open(url, '_blank');
 }
+
+// Función para el Acordeón
+function toggleAcordeon(id) {
+    const contenido = document.getElementById(id);
+    const item = contenido.parentElement;
+    
+    // Cerramos los demás si queremos que solo haya uno abierto
+    // document.querySelectorAll('.acordeon-item').forEach(i => i.classList.remove('abierto'));
+
+    item.classList.toggle('abierto');
+}
+
+// Actualizamos la navegación
+function mostrarSeccion(idSeccion) {
+    const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios', 'seccion-familia', 'seccion-ayuda'];
+    
+    secciones.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+    });
+
+    const activa = document.getElementById(idSeccion);
+    if (activa) activa.style.display = 'block';
+}

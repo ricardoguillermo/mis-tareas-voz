@@ -518,3 +518,46 @@ body {
     width: 100%;
     max-width: 320px;
 }
+
+.boton-menu.ayuda { background: linear-gradient(135deg, #1abc9c, #16a085); }
+
+/* Estilo del Acordeón */
+.acordeon-container {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.acordeon-item {
+    background: white;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.acordeon-cabecera {
+    background: #ecf0f1;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.acordeon-cabecera h3 { margin: 0; font-size: 1.2rem; color: #2c3e50; }
+
+.acordeon-contenido {
+    padding: 0 20px;
+    max-height: 0; /* Cerrado por defecto */
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease;
+    background: #fff;
+}
+
+/* Cuando el acordeón está abierto */
+.acordeon-item.abierto .acordeon-contenido {
+    max-height: 500px; /* Ajusta según el contenido */
+    padding: 20px;
+}
+
+.acordeon-item.abierto .acordeon-cabecera span { transform: rotate(45deg); }
