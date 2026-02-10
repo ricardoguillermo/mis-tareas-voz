@@ -368,6 +368,7 @@ function actualizarInterfazTareas(tareas) {
 
         // REGLA DE ORO: Si es compra va al div de compras, si no al de tareas
         if (esCompra && contenedorCompras) {
+            console.log("Agregando a lista de compras:", tarea.titulo);
             contenedorCompras.appendChild(div);
         } else if (contenedorGeneral) {
             contenedorGeneral.appendChild(div);
