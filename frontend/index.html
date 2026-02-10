@@ -61,54 +61,35 @@
     </div>
 
     <div id="seccion-tareas" class="seccion" style="display: none">
-      <h2>Hacemos juntos las Tareas</h2>
-      <button onclick="mostrarSeccion('menu-principal')" class="btn-volver">
+    <h2>Hacemos juntos las Tareas</h2>
+    <button onclick="mostrarSeccion('menu-principal')" class="btn-volver">
         ⬅️ Volver al Menú principal
-      </button>
-      <hr> 
-        <div id="contenedor-compras">
-          <h3 class="subtitulo">🛒 Lista de Supermercado</h3>
-          
+    </button>
+    
+    <div class="cabecera-fija">
+        <button class="btn-accion" onclick="abrirEditorSeguro()">+ Nueva Tarea</button>
+        <button class="btn-accion rutina" onclick="cargarRutinaRemedios()">💊 Cargar Remedios</button>
+        <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
+    </div>
+
+    <div id="contenedor-compras" class="card-lista">
+        <h3 class="subtitulo">🛒 Lista de Supermercado</h3>
+        <div id="lista-compras"></div> <button class="btn-whatsapp" onclick="enviarListaWhatsApp()">Ver en WhatsApp 📲</button>
+    </div>
+
+    <div id="contenedor-tareas" class="card-lista">
+        <h3 class="subtitulo">📌 Actividades del Día</h3>
+        <div id="lista-tareas"></div> </div>
+
+    <div id="contenedor-editor" class="editor-punteado" style="display: none">
+        <input type="text" id="titulo-tarea" placeholder="¿Qué hacemos juntos?" />
+        <textarea id="notas-tarea" placeholder="Notas..."></textarea>
+        <div class="botones-editor">
+            <button id="btn-voz" class="btn-dictar"><span>🎤</span> Dictar</button>
+            <button class="btn-guardar" onclick="guardarTareaManual()"><span>💾</span> Guardar</button>
         </div>
     </div>
-    <div id="lista-compras">Hola donde estoy ? </div>
-    <div id="lista-tareas"></div>
-
-      <div id="contenedor-editor" class="editor-punteado" style="display: none">
-        <!-- <h3>✍️ Agregar Nueva Actividad</h3> -->
-
-        <input
-          type="text"
-          id="titulo-tarea"
-          placeholder="¿Qué hacemos juntos?"
-        />
-        <textarea id="notas-tarea" placeholder="Notas..."></textarea>
-
-        <div class="botones-editor">
-          <button id="btn-voz" class="btn-dictar">
-            <span>🎤</span> Dictar
-          </button>
-          <button
-            id="btn-guardar"
-            class="btn-guardar"
-            onclick="guardarTareaManual()"
-          >
-            <span>💾</span> Guardar
-          </button>
-        </div>
-      </div>
-
-      <div class="controles-lista">
-        <button
-          onclick="
-            document.getElementById('contenedor-editor').style.display = 'block'
-          "
-        >
-          + Nueva Tarea
-        </button>
-        <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
-      </div>
-
+  </div>
       <!-- <div id="lista-tareas"></div> -->
     </div>
     <div id="seccion-radios" class="seccion" style="display: none">

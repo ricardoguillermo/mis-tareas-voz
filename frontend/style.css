@@ -561,3 +561,17 @@ body {
 }
 
 .acordeon-item.abierto .acordeon-cabecera span { transform: rotate(45deg); }
+
+.card-lista {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.subtitulo {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    color: #2c3e50;
+}

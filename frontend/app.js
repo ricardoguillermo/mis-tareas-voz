@@ -345,17 +345,15 @@ function actualizarInterfazTareas(tareas) {
     const contenedorGeneral = document.getElementById('lista-tareas');
     const contenedorCompras = document.getElementById('lista-compras'); 
     
-    // Limpiamos ambos contenedores
     if (contenedorGeneral) contenedorGeneral.innerHTML = "";
     if (contenedorCompras) contenedorCompras.innerHTML = "";
 
     tareas.forEach(tarea => {
-        // Limpiamos el texto de espacios y lo pasamos a minúsculas para comparar mejor
         const tituloLimpio = tarea.titulo.trim().toLowerCase();
         const esCompra = tituloLimpio.startsWith("comprar") || tituloLimpio.startsWith("compra");
 
         const div = document.createElement('div');
-        div.className = esCompra ? 'tarea-card compra' : 'tarea-card';
+        div.className = 'tarea-card';
         div.innerHTML = `
             <div class="tarea-info">
                 <input type="checkbox" ${tarea.chequeado ? 'checked' : ''} 
@@ -366,9 +364,8 @@ function actualizarInterfazTareas(tareas) {
             </div>
         `;
 
-        // REGLA DE ORO: Si es compra va al div de compras, si no al de tareas
         if (esCompra && contenedorCompras) {
-            console.log("Agregando a lista de compras:", tarea.titulo);
+            console.log("Enviando a compras:", tarea.titulo);
             contenedorCompras.appendChild(div);
         } else if (contenedorGeneral) {
             contenedorGeneral.appendChild(div);
