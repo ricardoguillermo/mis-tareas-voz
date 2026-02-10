@@ -346,7 +346,7 @@ function actualizarInterfazTareas(tareas) {
     const contenedorCompras = document.getElementById('lista-compras'); 
     
     if (contenedorGeneral) contenedorGeneral.innerHTML = "";
-    if (contenedorCompras) contenedorCompras.innerHTML = "";
+    if (contenedorCompras) contenedorCompras.innerHTML = "prueba compras";
 
     tareas.forEach(tarea => {
         const tituloLimpio = tarea.titulo.trim().toLowerCase();
