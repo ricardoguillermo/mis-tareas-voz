@@ -346,11 +346,12 @@ function actualizarInterfazTareas(tareas) {
     const contenedorCompras = document.getElementById('lista-compras'); 
     
     if (contenedorGeneral) contenedorGeneral.innerHTML = "";
-    if (contenedorCompras) contenedorCompras.innerHTML = "prueba compras";
+    if (contenedorCompras) contenedorCompras.innerHTML = "";
 
     tareas.forEach(tarea => {
-        const tituloLimpio = tarea.titulo.trim().toLowerCase();
-        const esCompra = tituloLimpio.startsWith("comprar") || tituloLimpio.startsWith("compra");
+        // Limpiamos el texto para detectar "comprar" o "compra" sin errores
+        const texto = tarea.titulo.trim().toLowerCase();
+        const esCompra = texto.startsWith("comprar") || texto.startsWith("compra");
 
         const div = document.createElement('div');
         div.className = 'tarea-card';
@@ -364,15 +365,14 @@ function actualizarInterfazTareas(tareas) {
             </div>
         `;
 
+        // Mandamos la tarea al contenedor que le toca
         if (esCompra && contenedorCompras) {
-            console.log("Enviando a compras:", tarea.titulo);
             contenedorCompras.appendChild(div);
         } else if (contenedorGeneral) {
             contenedorGeneral.appendChild(div);
         }
     });
 }
-
 async function cargarRutinaRemedios() {
     const fecha = document.getElementById('fecha-seleccionada').value;
     const remedios = [

@@ -61,53 +61,28 @@
     </div>
 
     <div id="seccion-tareas" class="seccion" style="display: none">
-      <h2>Hacemos juntos las Tareas</h2>
-      <button onclick="mostrarSeccion('menu-principal')" class="btn-volver">
+    <h2>Hacemos juntos las Tareas</h2>
+    <button onclick="mostrarSeccion('menu-principal')" class="btn-volver">
         ⬅️ Volver al Menú principal
-      </button>
-
-      <div class="cabecera-fija">
-        <button class="btn-accion" onclick="abrirEditorSeguro()">
-          + Nueva Tarea
-        </button>
-        <button class="btn-accion rutina" onclick="cargarRutinaRemedios()">
-          💊 Cargar Remedios
-        </button>
+    </button>
+    
+    <div class="controles-lista">
+        <button onclick="abrirEditorSeguro()">+ Nueva Tarea</button>
+        <button onclick="cargarRutinaRemedios()">💊 Cargar Remedios</button>
         <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
-      
-
-        <div id="contenedor-compras" class="card-lista">
-          <h3 class="subtitulo">🛒 Lista de Supermercado</h3>
-          <div id="lista-compras">Aca va la  lista de compras</div>
-          <button class="btn-whatsapp" onclick="enviarListaWhatsApp()">
-            Ver en WhatsApp 📲
-          </button>
-        </div>
-      </div>
-      <div id="contenedor-tareas" class="card-lista">
-        <h3 class="subtitulo">📌 Actividades del Día</h3>
-        <div id="lista-tareas"></div>
-      </div>
-
-      <div id="contenedor-editor" class="editor-punteado" style="display: none">
-        <input
-          type="text"
-          id="titulo-tarea"
-          placeholder="¿Qué hacemos juntos?"
-        />
-        <textarea id="notas-tarea" placeholder="Notas..."></textarea>
-        <div class="botones-editor">
-          <button id="btn-voz" class="btn-dictar">
-            <span>🎤</span> Dictar
-          </button>
-          <button class="btn-guardar" onclick="guardarTareaManual()">
-            <span>💾</span> Guardar
-          </button>
-        </div>
-      </div>
     </div>
-    <!-- <div id="lista-tareas"></div> -->
 
+    <div class="contenedor-lista-especifica">
+        <h3 class="subtitulo">🛒 Lista de Supermercado</h3>
+        <div id="lista-compras"></div> <button class="btn-whatsapp" onclick="enviarListaWhatsApp()">Enviar a mi WhatsApp 📲</button>
+    </div>
+
+    <hr>
+
+    <div class="contenedor-lista-especifica">
+        <h3 class="subtitulo">📌 Actividades del Día</h3>
+        <div id="lista-tareas"></div> </div>
+</div>
     <div id="seccion-radios" class="seccion" style="display: none">
       <button onclick="mostrarSeccion('menu-principal')" class="btn-volver">
         ⬅️ Volver al Menú principal
