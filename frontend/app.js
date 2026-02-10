@@ -341,6 +341,40 @@ console.log("Actualizando interfaz con tareas:", tareas);
     });
 } */
 
+function actualizarInterfazTareas(tareas) {
+    const contenedorGeneral = document.getElementById('lista-tareas');
+    const contenedorCompras = document.getElementById('lista-compras'); 
+    
+    // Limpiamos ambos contenedores
+    if (contenedorGeneral) contenedorGeneral.innerHTML = "";
+    if (contenedorCompras) contenedorCompras.innerHTML = "";
+
+    tareas.forEach(tarea => {
+        // Limpiamos el texto de espacios y lo pasamos a minúsculas para comparar mejor
+        const tituloLimpio = tarea.titulo.trim().toLowerCase();
+        const esCompra = tituloLimpio.startsWith("comprar") || tituloLimpio.startsWith("compra");
+
+        const div = document.createElement('div');
+        div.className = esCompra ? 'tarea-card compra' : 'tarea-card';
+        div.innerHTML = `
+            <div class="tarea-info">
+                <input type="checkbox" ${tarea.chequeado ? 'checked' : ''} 
+                       onchange="alternarTarea('${tarea._id}', this.checked)">
+                <span class="${tarea.chequeado ? 'completada' : ''}">
+                    ${esCompra ? '🛒' : '📌'} ${tarea.titulo}
+                </span>
+            </div>
+        `;
+
+        // REGLA DE ORO: Si es compra va al div de compras, si no al de tareas
+        if (esCompra && contenedorCompras) {
+            contenedorCompras.appendChild(div);
+        } else if (contenedorGeneral) {
+            contenedorGeneral.appendChild(div);
+        }
+    });
+}
+
 async function cargarRutinaRemedios() {
     const fecha = document.getElementById('fecha-seleccionada').value;
     const remedios = [
@@ -365,7 +399,7 @@ async function cargarRutinaRemedios() {
     obtenerTareas(); // Refresca la lista al terminar
 }
 
-function actualizarInterfazTareas(tareas) {
+/* function actualizarInterfazTareas(tareas) {
     const contenedor = document.getElementById('lista-tareas');
     const contenedorCompras = document.getElementById('lista-compras'); // ¡Crea este div en tu HTML!
     console.log("Actualizando interfaz con tareas:", tareas);
@@ -393,7 +427,7 @@ function actualizarInterfazTareas(tareas) {
         }
     });
 }
-
+ */
 function enviarListaWhatsApp() {
     const tareas = document.querySelectorAll('#lista-compras .tarea-card span');
     let texto = "*Lista de Supermercado - " + document.getElementById('fecha-seleccionada').value + "*\n";
