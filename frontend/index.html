@@ -46,7 +46,8 @@
         ⬅️ Volver al Menú principal
       </button>
       -->
-      
+<div id="seccion-tareas" class="seccion" style="display: none">
+    <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()">
       <div class="controles-lista">
       <button class="btn-accion" onclick="abrirEditorSeguro()">+ Nueva Tarea</button>
         <button onclick="cargarRutinaRemedios()">💊 Cargar Remedios</button>
@@ -64,8 +65,7 @@
       </div>
  
 
- <div id="seccion-tareas" class="seccion" style="display: none">
-    <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()">
+ 
     
     <div id="contenedor-editor" class="editor-punteado" style="display: none">
          <input type="text" id="titulo-tarea" placeholder="¿Qué hacemos?">
