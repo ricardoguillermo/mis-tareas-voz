@@ -3,7 +3,7 @@ const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new Recognition(); // <--- Aquí se define
 recognition.lang = "es-ES";
 
-const btn = document.querySelector("#btn-voz");
+const btn = document.querySelector("btn-voz");
 const MIinput = document.getElementById("tarea-texto");
 
 // document.getElementById("fecha-seleccionada").onchange = obtenerTareas;
