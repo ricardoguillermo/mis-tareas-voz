@@ -40,17 +40,20 @@
       </div>
     </div>
 
-    <div id="seccion-tareas" class="seccion" style="display: none">
+    <!-- <div id="seccion-tareas" class="seccion" style="display: none">
       <h2>Hacemos juntos las Tareas</h2>
       <button onclick="mostrarSeccion('menu-principal')" class="btn-volver">
         ⬅️ Volver al Menú principal
       </button>
-
+      -->
+      
       <div class="controles-lista">
       <button class="btn-accion" onclick="abrirEditorSeguro()">+ Nueva Tarea</button>
         <button onclick="cargarRutinaRemedios()">💊 Cargar Remedios</button>
         <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
       </div>
+
+      
 
       <div class="contenedor-lista-especifica">
         <h3 class="subtitulo">🛒 Lista de Supermercado</h3>
@@ -59,7 +62,17 @@
           Enviar a mi WhatsApp 📲
         </button>
       </div>
+ 
 
+ <div id="seccion-tareas" class="seccion" style="display: none">
+    <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()">
+    
+    <div id="contenedor-editor" class="editor-punteado" style="display: none">
+         <input type="text" id="titulo-tarea" placeholder="¿Qué hacemos?">
+         <button id="btn-voz">🎤 Dictar</button>
+         <button onclick="guardarTareaManual()">💾 Guardar</button>
+    </div>
+</div>
       <hr />
 
       <div class="contenedor-lista-especifica">
