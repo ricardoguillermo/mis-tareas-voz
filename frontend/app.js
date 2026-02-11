@@ -49,9 +49,24 @@ recognition.onresult = (event) => {
 };
 
 // 4. Iniciar el micrófono
-btn.onclick = () => {
-  recognition.start();
-  console.log("Escuchando...");
+// Usamos una función segura para conectar el micrófono
+function conectarMicrofono() {
+    const btnVoz = document.getElementById("btn-voz");
+    if (btnVoz) {
+        btnVoz.onclick = () => {
+            recognition.start();
+            console.log("Escuchando voz...");
+        };
+    }
+}
+
+// Al recibir voz, llenamos el campo correcto
+recognition.onresult = (event) => {
+    const voz = event.results[0][0].transcript;
+    const inputTitulo = document.getElementById("titulo-tarea");
+    if (inputTitulo) {
+        inputTitulo.value = voz;
+    }
 };
 
 async function actualizarEstado(id, estado) {
@@ -265,40 +280,36 @@ async function guardarTareaManual() {
 }
 
 // Conexión del Micrófono (dentro del DOMContentLoaded)
+// 1. INICIO: Fecha de hoy y Menú Principal
 window.addEventListener('DOMContentLoaded', () => {
-mostrarSeccion('menu-principal');
-const selector = document.getElementById('fecha-seleccionada');
-    console.log("Selector de fecha encontrado:", !!selector);
+    // Ponemos la fecha de hoy en el calendario
+    const selector = document.getElementById('fecha-seleccionada');
     if (selector) {
-        // 1. Obtenemos la fecha de hoy en formato AAAA-MM-DD (Formato que entiende el input type="date")
-        const hoy = new Date();
-        const anio = hoy.getFullYear();
-        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-        const dia = String(hoy.getDate()).padStart(2, '0');
-        const fechaHoy = `${anio}-${mes}-${dia}`;
-        
-        // 2. Seteamos el calendario visualmente
-        selector.value = fechaHoy;
-        console.log("Sistema iniciado en la fecha: " + fechaHoy);
-    }
-
-// 3. ¡IMPORTANTE! Llamamos a la función para que busque las tareas de hoy en Render
+        const hoy = new Date().toISOString().split('T')[0];
+        selector.value = hoy;
         obtenerTareas();
-
-    const btnVoz = document.getElementById('btn-voz');
-    if (btnVoz) {
-        btnVoz.onclick = () => {
-            recognition.start();
-            console.log("Escuchando voz...");
-        };
     }
-    
-    // Al recibir el resultado de voz, lo ponemos en el input
-    recognition.onresult = (event) => {
-        const voz = event.results[0][0].transcript;
-        document.getElementById("titulo-tarea").value = voz;
-    };
+    // Forzamos ir al menú principal para que no se pisen las pantallas
+    mostrarSeccion('menu-principal');
 });
+
+// 2. EDITOR SEGURO: Con verificación de ID
+function abrirEditorSeguro() {
+    const clave = prompt("Introduce la clave de familiar:");
+    const autorizados = ["Diana_hija", "Ricardo_esposo", "Aníbal_hijo_menor", "Guillermo_hijo_mayor"];
+
+    if (autorizados.includes(clave)) {
+        const editor = document.getElementById('contenedor-editor');
+        if (editor) {
+            editor.style.display = 'block';
+            conectarMicrofono(); // Conectamos el micro recién cuando abrimos el editor
+        } else {
+            console.error("No se encontró el contenedor-editor");
+        }
+    } else {
+        alert("Clave incorrecta");
+    }
+}
 
 // 1. Cambiamos el nombre de la función para que coincida con el error
 async function alternarTarea(id, estado) {
