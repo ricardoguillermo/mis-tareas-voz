@@ -86,14 +86,19 @@ function hablar(texto) {
 }
 
 function abrirEditorSeguro() {
-    const clave = prompt("Introduce la clave de familiar para agregar tareas:");
+    const clave = prompt("Introduce la clave de familiar:");
     const autorizados = ["Diana_hija", "Ricardo_esposo", "Aníbal_hijo_menor", "Guillermo_hijo_mayor"];
 
     if (autorizados.includes(clave)) {
-        document.getElementById('contenedor-editor').style.display = 'block';
-        hablar("Modo edición activado.");
+        const editor = document.getElementById('contenedor-editor');
+        if (editor) {
+            editor.style.display = 'block';
+            console.log("Editor abierto correctamente");
+        } else {
+            console.error("Error: No se encontró el ID 'contenedor-editor' en el HTML");
+        }
     } else {
-        alert("Clave incorrecta. Solo la familia puede agregar tareas.");
+        alert("Clave incorrecta");
     }
 }
  
