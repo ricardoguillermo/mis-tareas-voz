@@ -268,7 +268,7 @@ async function guardarTareaManual() {
 window.addEventListener('DOMContentLoaded', () => {
 mostrarSeccion('menu-principal');
 const selector = document.getElementById('fecha-seleccionada');
-    
+    console.log("Selector de fecha encontrado:", !!selector);
     if (selector) {
         // 1. Obtenemos la fecha de hoy en formato AAAA-MM-DD (Formato que entiende el input type="date")
         const hoy = new Date();
