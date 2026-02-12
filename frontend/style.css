@@ -415,6 +415,18 @@ textarea {
     padding: 8px 0;
 }
 
+/* Botón de eliminar tarea */
+.btn-eliminar {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.btn-eliminar:active { transform: translateY(2px); }
+
 .btn-guardar {
     background-color: #27ae60; /* Verde */
     color: white;

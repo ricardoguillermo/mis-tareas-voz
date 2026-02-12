@@ -373,12 +373,17 @@ function actualizarInterfazTareas(tareas) {
         const div = document.createElement('div');
         div.className = 'tarea-card';
         div.innerHTML = `
-            <div class="tarea-info">
-                <input type="checkbox" ${tarea.chequeado ? 'checked' : ''} 
-                       onchange="alternarTarea('${tarea._id}', this.checked)">
-                <span class="${tarea.chequeado ? 'completada' : ''}">
-                    ${esCompra ? '🛒' : '📌'} ${tarea.titulo}
-                </span>
+            <div class="tarea-info" style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <input type="checkbox" ${tarea.chequeado ? 'checked' : ''} 
+                         onchange="alternarTarea('${tarea._id}', this.checked)">
+                  <span class="${tarea.chequeado ? 'completada' : ''}">
+                      ${esCompra ? '🛒' : '📌'} ${tarea.titulo}
+                  </span>
+                </div>
+                <div>
+                  <button class="btn-eliminar" onclick="eliminarTarea('${tarea._id}')">❌</button>
+                </div>
             </div>
         `;
 
@@ -477,4 +482,20 @@ function mostrarSeccion(idSeccion) {
 
     const activa = document.getElementById(idSeccion);
     if (activa) activa.style.display = 'block';
+}
+// Función para eliminar una tarea por su id
+async function eliminarTarea(id) {
+    if (!id) return console.error('ID inválido para eliminar');
+    if (!confirm('¿Confirmás eliminar esta tarea?')) return;
+
+    try {
+        const res = await fetch(`${urlBase}/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+            obtenerTareas();
+        } else {
+            console.error('Error al eliminar tarea', res.status);
+        }
+    } catch (error) {
+        console.error('Error al eliminar tarea:', error);
+    }
 }
