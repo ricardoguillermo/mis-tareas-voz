@@ -398,6 +398,23 @@ textarea {
     flex: 1;
 }
 
+/* Estilo específico para la Lista de Supermercado */
+#lista-compras, .cambio-color-super {
+    background-color: #eafaf1; /* Verde muy claro de fondo */
+    padding: 18px;
+    border-radius: 14px;
+    min-height: 60px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    color: #155724; /* Texto ligeramente verde oscuro */
+}
+
+/* Si querés que los items dentro tengan un estilo distinto */
+#lista-compras .tarea-card {
+    background: transparent;
+    box-shadow: none;
+    padding: 8px 0;
+}
+
 .btn-guardar {
     background-color: #27ae60; /* Verde */
     color: white;
