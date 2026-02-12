@@ -44,8 +44,9 @@ async function guardarTareaEnNube(texto) {
 
 // Al recibir voz, solo llenamos el campo para que puedas editarlo
 recognition.onresult = (event) => {
-  const voz = event.results[0][0].transcript;
-  document.getElementById("tarea-titulo").value = voz;
+    const voz = event.results[0][0].transcript;
+    const input = document.getElementById("titulo-tarea");
+    if (input) input.value = voz;
 };
 
 // 4. Iniciar el micrófono
