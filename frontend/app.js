@@ -14,7 +14,9 @@ const MIinput = document.getElementById("tarea-texto");
 //https://maximus-inert-edgily.ngrok-free.dev
 // Pega aquí la dirección que acabas de copiar de la terminal del puerto 3000
 // const urlBase = 'https://maximus-inert-edgily.ngrok-free.app/tareas';
-const urlBase = "https://mis-tareas-voz.onrender.com/tareas";
+// En desarrollo con Live Server (127.0.0.1:5500) apuntamos al backend local
+// const urlBase = "http://localhost:10000/tareas";
+ const urlBase = "/tareas"; // Con esta ruta relativa, el frontend se adapta automáticamente al dominio donde esté alojado
 
 async function guardarTareaEnNube(texto) {
   try {
@@ -196,23 +198,7 @@ async function obtenerTareas() {
     }
 }
 
-// 1. EL CEREBRO DE LAS PANTALLAS
-/* function mostrarSeccion(idSeccion) {
-    // Agregamos 'seccion-familia' a la lista
-    const secciones = ['menu-principal', 'seccion-tareas', 'seccion-radios', 'seccion-familia','seccion-ayudas'];
-    secciones.forEach(id => {
-        const elemento = document.getElementById(id);
-        if (elemento) {
-            elemento.style.display = 'none';
-        }
-    });
 
-    const activa = document.getElementById(idSeccion);
-    if (activa) {
-        activa.style.display = 'block';
-    }
-}
- */
 
 function mostrarSeccion(idSeccion) {
     // 1. Agregamos 'seccion-compras' a la lista de secciones a ocultar

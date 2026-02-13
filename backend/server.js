@@ -4,8 +4,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-mongoose.connect(process.env.MONGO_URI);
-
 console.log("Revisando la clave:", process.env.MONGO_URI); // <--- Agrega esta línea para debug
 
 if (!process.env.MONGO_URI) {
@@ -75,6 +73,24 @@ app.put("/tareas/:id", async (req, res) => {
         await Task.findByIdAndUpdate(id, { chequeado }); // <--- Cambiado de 'Tarea' a 'Task'
         res.json({ mensaje: "Estado actualizado" });
     } catch (err) { res.status(500).send(err); }
+});
+
+// RUTA PARA ELIMINAR UNA TAREA
+app.delete("/tareas/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log('DELETE request received for id:', id);
+    const eliminado = await Task.findByIdAndDelete(id);
+    if (!eliminado) {
+      console.log('No se encontró tarea con id:', id);
+      return res.status(404).json({ mensaje: 'No se encontró la tarea' });
+    }
+    console.log('Tarea eliminada con id:', id);
+    res.json({ mensaje: 'Tarea eliminada' });
+  } catch (err) {
+    console.error('Error en DELETE /tareas/:id', err);
+    res.status(500).send(err);
+  }
 });
 
 // ... (El resto del app.listen se mantiene igual)// Busca el final de tu server.js y déjalo así:
