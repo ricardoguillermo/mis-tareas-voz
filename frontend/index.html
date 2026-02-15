@@ -64,7 +64,9 @@
       </div>
 
       <div class="contenedor-lista-especifica">
-        <h3 class="subtitulo">🛒 Lista de Supermercado</h3>
+        <h3 class="subtitulo">🛒 Lista de Supermercado
+          <button class="btn-leer" onclick="leerListaCompras()">🔊 Leer</button>
+        </h3>
         <div id="lista-compras" class="cambio-color-super"></div>
         <button class="btn-whatsapp" onclick="enviarListaWhatsApp()">
           Enviar a mi WhatsApp 📲
@@ -74,7 +76,9 @@
       <hr />
 
       <div class="contenedor-lista-especifica">
-        <h3 class="subtitulo">📌 Actividades del Día</h3>
+        <h3 class="subtitulo">📌 Actividades del Día
+          <button class="btn-leer" onclick="leerActividadesDia()">🔊 Leer</button>
+        </h3>
         <div id="lista-tareas"></div>
       </div>
     </div>
@@ -87,21 +91,7 @@
       <h2>Radios para Betty</h2>
 
       <div class="contenedor-radios">
-        <div class="tarjeta-radio">
-          <div class="info-radio">
-            <span class="emoji-radio">📻</span>
-            <div>
-              <h3>Radio Clarín</h3>
-              <p>Tango y noticias</p>
-            </div>
-          </div>
-          <button
-            class="btn-enlace"
-            onclick="window.open('https://radioclarin.com.uy/', '_blank')"
-          >
-            Escuchar Ahora
-          </button>
-        </div>
+        
 
         <div class="tarjeta-radio">
           <div class="info-radio">
@@ -136,6 +126,37 @@
             Escuchar Ahora
           </button>
         </div>
+        <div class="tarjeta-radio">
+          <div class="info-radio">
+            <span class="emoji-radio">🌟</span>
+            <div>
+              <h3>Radio AZUL</h3>
+              <p>Clásicos FM y ...</p>
+            </div>
+          </div>
+          <button
+            class="btn-enlace"
+            onclick="window.open('https://azulfm.com.uy/envivo', '_blank')"
+          >
+            Escuchar Ahora
+          </button>
+        </div>
+<!-- Sarandi -->
+ <div class="tarjeta-radio">
+          <div class="info-radio">
+            <span class="emoji-radio">👨‍💼​</span>
+            <div>
+              <h3>Radio Sarandí</h3>
+              <p>Información y noticias</p>
+            </div>
+          </div>
+          <button
+            class="btn-enlace"
+            onclick="window.open('https://www.sarandi690.com.uy/envivo/', '_blank')"
+          >
+            Escuchar Ahora
+          </button>
+        </div>
 
         <div class="tarjeta-radio">
           <div class="info-radio">
@@ -148,6 +169,22 @@
           <button
             class="btn-enlace"
             onclick="window.open('https://www.sport890.com.uy/', '_blank')"
+          >
+            Escuchar Ahora
+          </button>
+        </div>
+
+        <div class="tarjeta-radio">
+          <div class="info-radio">
+            <span class="emoji-radio">📻</span>
+            <div>
+              <h3>Radio Clarín</h3>
+              <p>Tango y noticias</p>
+            </div>
+          </div>
+          <button
+            class="btn-enlace"
+            onclick="window.open('https://radioclarin.com.uy/', '_blank')"
           >
             Escuchar Ahora
           </button>
@@ -281,7 +318,9 @@
       <button class="btn-volver" onclick="mostrarSeccion('menu-principal')">
         ⬅️ Volver al menú principal
       </button>
-      <h2 class="subtitulo">Ayudas para el día a día</h2>
+      <h2 class="subtitulo">Ayudas para el día a día
+        <button class="btn-leer" onclick="leerAyudas()">🔊 Leer</button>
+      </h2>
 
       <div class="acordeon-container">
         <div class="acordeon-item">

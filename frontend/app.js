@@ -485,3 +485,51 @@ async function eliminarTarea(id) {
         console.error('Error al eliminar tarea:', error);
     }
 }
+
+/* ==================== Funciones de lectura (Text-to-Speech) ==================== */
+function leerTexto(texto) {
+    if (!texto) return;
+    window.speechSynthesis.cancel();
+    const msg = new SpeechSynthesisUtterance(texto);
+    msg.lang = 'es-ES';
+    msg.rate = 0.95;
+    window.speechSynthesis.speak(msg);
+}
+
+function leerListaCompras() {
+    const items = Array.from(document.querySelectorAll('#lista-compras .tarea-card span'))
+        .filter(s => !s.classList.contains('completada'));
+    if (!items || items.length === 0) return leerTexto('No hay elementos en la lista de supermercado.');
+    let texto = 'Lista de supermercado. ';
+    items.forEach((s, i) => {
+        // limpiamos prefijos como emoji de carrito y la palabra "comprar/compra"
+        let t = (s.innerText || '').trim();
+        t = t.replace(/^\s*🛒\s*/i, '');
+        t = t.replace(/^\s*(comprar|compra)\s+/i, '');
+        texto += `Elemento ${i+1}: ${t}. `;
+    });
+    leerTexto(texto);
+}
+
+function leerActividadesDia() {
+    const items = Array.from(document.querySelectorAll('#lista-tareas .tarea-card span'))
+        .filter(s => !s.classList.contains('completada'));
+    if (!items || items.length === 0) return leerTexto('No hay actividades para el día.');
+    let texto = 'Actividades del día. ';
+    items.forEach((s, i) => {
+        // quitar emoji inicial y cualquier marcador como 📌
+        let t = (s.innerText || '').trim();
+        t = t.replace(/^\s*📌\s*/i, '');
+        texto += `Actividad ${i+1}: ${t}. `;
+    });
+    leerTexto(texto);
+}
+
+function leerAyudas() {
+    const medidas = document.getElementById('ayuda-medidas');
+    const recetas = document.getElementById('ayuda-recetas');
+    let texto = 'Ayudas para el día a día. ';
+    if (medidas) texto += 'Medidas para la cocina: ' + medidas.innerText + '. ';
+    if (recetas) texto += 'Recetas fáciles: ' + recetas.innerText + '. ';
+    leerTexto(texto);
+}

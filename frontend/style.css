@@ -286,6 +286,19 @@ textarea {
     box-shadow: none;
 }
 
+/* Botón pequeño para lectura TTS junto a títulos */
+.btn-leer {
+    background: linear-gradient(180deg,#f1f1f1,#e9e9e9);
+    border: 1px solid #d0d0d0;
+    color: #2c3e50;
+    padding: 6px 10px;
+    margin-left: 8px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.btn-leer:active { transform: translateY(2px); }
+
 /* Botón volver discreto arriba */
 .btn-volver {
     background: #c2cfec;
