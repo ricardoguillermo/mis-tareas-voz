@@ -1,10 +1,19 @@
 // 1. Configuración de Voz
 const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new Recognition(); // <--- Aquí se define
-recognition.lang = "es-ES";
-
-const btn = document.querySelector("btn-voz");
-const MIinput = document.getElementById("tarea-texto");
+const recognition = Recognition ? new Recognition() : null;
+if (recognition) {
+    recognition.lang = "es-ES";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+}
+const USUARIOS_AUTORIZADOS_VOZ = {
+    "soy ricardo": "Ricardo",
+    "soy diana": "Diana",
+    "soy anibal": "Aníbal",
+    "soy guille": "Guille",
+};
+const FRASES_AUTORIZADAS_VOZ = Object.keys(USUARIOS_AUTORIZADOS_VOZ);
+let remitenteActual = "";
 
 // document.getElementById("fecha-seleccionada").onchange = obtenerTareas;
 // 2. Función para GUARDAR en MongoDB
@@ -42,35 +51,174 @@ async function guardarTareaEnNube(texto) {
 
 // obtenerTareas(); //solita?
 
-// 3. Evento cuando terminas de hablar
+function normalizarTexto(texto) {
+    return (texto || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[.,;:!?¡¿]/g, "")
+        .trim();
+}
 
-// Al recibir voz, solo llenamos el campo para que puedas editarlo
-recognition.onresult = (event) => {
-    const voz = event.results[0][0].transcript;
-    const input = document.getElementById("titulo-tarea");
-    if (input) input.value = voz;
-};
+function mostrarEstadoClave(mensaje, tipo = "") {
+    const estado = document.getElementById("estado-clave-voz");
+    if (!estado) return;
+    estado.textContent = mensaje;
+    estado.className = `estado-clave-voz ${tipo}`.trim();
+}
+
+function obtenerRemitenteDesdeFrase(transcripcion) {
+    const dicho = normalizarTexto(transcripcion);
+    return USUARIOS_AUTORIZADOS_VOZ[dicho] || "";
+}
+
+function obtenerInicialRemitente(remitente) {
+    const nombre = (remitente || "").trim();
+    return nombre ? nombre.charAt(0).toUpperCase() : "?";
+}
+
+function extraerRemitenteDesdeNotas(notas) {
+    if (!notas) return "";
+    const match = String(notas).match(/\[autor:(.+?)\]/i);
+    return match ? match[1].trim() : "";
+}
+
+function obtenerClaseColorRemitente(remitente) {
+    const clave = normalizarTexto(remitente);
+    if (clave === "ricardo") return "remitente-ricardo";
+    if (clave === "diana") return "remitente-diana";
+    if (clave === "anibal") return "remitente-anibal";
+    if (clave === "guille") return "remitente-guille";
+    return "remitente-default";
+}
+
+function escucharUnaVezPorVoz(callback) {
+    if (!recognition) {
+        callback(new Error("Reconocimiento de voz no soportado"));
+        return;
+    }
+
+    let finalizado = false;
+    recognition.onresult = (event) => {
+        if (finalizado) return;
+        finalizado = true;
+        const voz = event.results[0][0].transcript;
+        callback(null, voz);
+    };
+
+    recognition.onerror = () => {
+        if (finalizado) return;
+        finalizado = true;
+        callback(new Error("No se pudo reconocer la voz"));
+    };
+
+    recognition.onend = () => {
+        if (finalizado) return;
+        finalizado = true;
+        callback(new Error("No se detectó voz"));
+    };
+
+    try {
+        recognition.start();
+    } catch (error) {
+        callback(error);
+    }
+}
+
+function hablarConCallback(texto, callback) {
+    const mensaje = new SpeechSynthesisUtterance(texto);
+    mensaje.lang = "es-ES";
+    mensaje.rate = 0.9;
+    mensaje.onend = () => {
+        if (typeof callback === "function") callback();
+    };
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(mensaje);
+}
+
+function claveVozValida(transcripcion) {
+    const dicho = normalizarTexto(transcripcion);
+    return FRASES_AUTORIZADAS_VOZ.includes(dicho);
+}
+
+function abrirContenedorEditor() {
+    const editor = document.getElementById("contenedor-editor");
+    if (!editor) {
+        console.error("No se encontró el contenedor-editor");
+        return;
+    }
+    editor.style.display = "block";
+    conectarMicrofono();
+    const mensaje = remitenteActual
+        ? `✅ Acceso autorizado para ${remitenteActual}`
+        : "✅ Acceso por voz autorizado";
+    mostrarEstadoClave(mensaje, "ok");
+}
+
+function iniciarDesbloqueoPorVoz() {
+    mostrarEstadoClave("🎤 Di: ingresa calve", "");
+
+    if (!recognition) {
+        const claveFallback = prompt("Tu navegador no soporta micrófono. Escribe una frase: soy Ricardo, soy Diana, soy Aníbal o soy Guille");
+        const remitente = obtenerRemitenteDesdeFrase(claveFallback);
+        if (remitente) {
+            remitenteActual = remitente;
+            abrirContenedorEditor();
+        } else {
+            mostrarEstadoClave("❌ Clave incorrecta", "error");
+        }
+        return;
+    }
+
+    let intentos = 0;
+    const maxIntentos = 2;
+
+    const intentar = () => {
+        mostrarEstadoClave("🎧 Escuchando contraseña...", "");
+        escucharUnaVezPorVoz((error, voz) => {
+            if (error) {
+                intentos += 1;
+                if (intentos < maxIntentos) {
+                    mostrarEstadoClave("⚠️ No te escuché bien. Reintentando...", "error");
+                    setTimeout(intentar, 500);
+                } else {
+                    mostrarEstadoClave("❌ No pude reconocer la voz. Toca '+ Nueva Tarea' para reintentar.", "error");
+                }
+                return;
+            }
+
+            const remitente = obtenerRemitenteDesdeFrase(voz);
+            if (remitente) {
+                remitenteActual = remitente;
+                abrirContenedorEditor();
+                hablar(`Acceso autorizado, ${remitente}. Puedes crear una nueva tarea.`);
+                return;
+            }
+
+            mostrarEstadoClave("❌ Clave incorrecta. Usa: soy Ricardo, soy Diana, soy Aníbal o soy Guille.", "error");
+        });
+    };
+
+    hablarConCallback("Di la contraseña por voz. ", intentar);
+}
 
 // 4. Iniciar el micrófono
 // Usamos una función segura para conectar el micrófono
 function conectarMicrofono() {
-    const btnVoz = document.getElementById("btn-voz");
-    if (btnVoz) {
-        btnVoz.onclick = () => {
-            recognition.start();
-            console.log("Escuchando voz...");
-        };
-    }
-}
+        const btnVoz = document.getElementById("btn-voz");
+        if (!btnVoz) return;
 
-// Al recibir voz, llenamos el campo correcto
-recognition.onresult = (event) => {
-    const voz = event.results[0][0].transcript;
-    const inputTitulo = document.getElementById("titulo-tarea");
-    if (inputTitulo) {
-        inputTitulo.value = voz;
-    }
-};
+        btnVoz.onclick = () => {
+                escucharUnaVezPorVoz((error, voz) => {
+                        if (error) {
+                    mostrarEstadoClave("⚠️ No se pudo escuchar el dictado. Intenta nuevamente.", "error");
+                                return;
+                        }
+                        const inputTitulo = document.getElementById("titulo-tarea");
+                        if (inputTitulo) inputTitulo.value = voz;
+                });
+        };
+}
 
 async function actualizarEstado(id, estado) {
   try {
@@ -104,20 +252,7 @@ function hablar(texto) {
 }
 
 function abrirEditorSeguro() {
-    const clave = prompt("Introduce la clave de familiar:");
-    const autorizados = ["Diana_hija", "Ricardo_esposo", "Aníbal_hijo_menor", "Guillermo_hijo_mayor"];
-
-    if (autorizados.includes(clave)) {
-        const editor = document.getElementById('contenedor-editor');
-        if (editor) {
-            editor.style.display = 'block';
-            console.log("Editor abierto correctamente");
-        } else {
-            console.error("Error: No se encontró el ID 'contenedor-editor' en el HTML");
-        }
-    } else {
-        alert("Clave incorrecta");
-    }
+    iniciarDesbloqueoPorVoz();
 }
  
 function pedirClave() {
@@ -237,6 +372,10 @@ async function guardarTareaManual() {
     const titulo = document.getElementById("titulo-tarea").value;
     const notas = document.getElementById("notas-tarea").value;
     const fecha = document.getElementById("fecha-seleccionada").value;
+    const remitente = remitenteActual || "Familiar";
+    const notasConAutor = notas
+        ? `${notas}\n[autor:${remitente}]`
+        : `[autor:${remitente}]`;
 
     if (!titulo) return alert("Por favor, escribe o dicta una tarea.");
 
@@ -246,7 +385,8 @@ async function guardarTareaManual() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ 
                 titulo: titulo, 
-                notas: notas, 
+                notas: notasConAutor,
+                remitente: remitente,
                 fecha_creacion: fecha, // Guardamos con la fecha del calendario
                 chequeado: false 
             }),
@@ -282,20 +422,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // 2. EDITOR SEGURO: Con verificación de ID
 function abrirEditorSeguro() {
-    const clave = prompt("Introduce la clave de familiar:");
-    const autorizados = ["Diana_hija", "Ricardo_esposo", "Aníbal_hijo_menor", "Guillermo_hijo_mayor"];
-
-    if (autorizados.includes(clave)) {
-        const editor = document.getElementById('contenedor-editor');
-        if (editor) {
-            editor.style.display = 'block';
-            conectarMicrofono(); // Conectamos el micro recién cuando abrimos el editor
-        } else {
-            console.error("No se encontró el contenedor-editor");
-        }
-    } else {
-        alert("Clave incorrecta");
-    }
+    iniciarDesbloqueoPorVoz();
 }
 
 // 1. Cambiamos el nombre de la función para que coincida con el error
@@ -355,12 +482,16 @@ function actualizarInterfazTareas(tareas) {
         // Limpiamos el texto para detectar "comprar" o "compra" sin errores
         const texto = tarea.titulo.trim().toLowerCase();
         const esCompra = texto.startsWith("comprar") || texto.startsWith("compra");
+        const remitente = tarea.remitente || extraerRemitenteDesdeNotas(tarea.notas) || "?";
+        const inicialRemitente = obtenerInicialRemitente(remitente);
+        const colorRemitente = obtenerClaseColorRemitente(remitente);
 
         const div = document.createElement('div');
         div.className = 'tarea-card';
         div.innerHTML = `
             <div class="tarea-info" style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
                 <div style="display:flex;align-items:center;gap:12px;">
+                                    <span class="badge-remitente ${colorRemitente}" title="Enviada por ${remitente}">${inicialRemitente}</span>
                   <input type="checkbox" ${tarea.chequeado ? 'checked' : ''} 
                          onchange="alternarTarea('${tarea._id}', this.checked)">
                   <span class="${tarea.chequeado ? 'completada' : ''}">

@@ -299,6 +299,56 @@ textarea {
 }
 .btn-leer:active { transform: translateY(2px); }
 
+.estado-clave-voz {
+    min-height: 24px;
+    margin: 8px 0 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: #2c3e50;
+}
+
+.estado-clave-voz.ok {
+    color: #1e8449;
+}
+
+.estado-clave-voz.error {
+    color: #c0392b;
+}
+
+.badge-remitente {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 50%;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.badge-remitente.remitente-ricardo {
+    background-color: #25D366;
+}
+
+.badge-remitente.remitente-diana {
+    background-color: #e84393;
+}
+
+.badge-remitente.remitente-anibal {
+    background-color: #0984e3;
+}
+
+.badge-remitente.remitente-guille {
+    background-color: #fd7e14;
+}
+
+.badge-remitente.remitente-default {
+    background-color: #6c757d;
+}
+
 /* Botón volver discreto arriba */
 .btn-volver {
     background: #c2cfec;

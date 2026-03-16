@@ -40,6 +40,7 @@ const TaskSchema = new mongoose.Schema({
   chequeado: { type: Boolean, default: false },
   fecha_creacion: { type: String, default: () => new Date().toISOString().split('T')[0] }, // Formato AAAA-MM-DD
   notas: String,
+  remitente: String,
 });
 
 const Task = mongoose.model("Task", TaskSchema);
