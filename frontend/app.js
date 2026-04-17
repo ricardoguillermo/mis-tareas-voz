@@ -14,6 +14,102 @@ const USUARIOS_AUTORIZADOS_VOZ = {
 };
 const FRASES_AUTORIZADAS_VOZ = Object.keys(USUARIOS_AUTORIZADOS_VOZ);
 let remitenteActual = "";
+const MAX_TAREAS_SESION_VOZ = 10;
+const DURACION_SESION_VOZ_MS = 30 * 60 * 1000;
+let temporizadorSesionVoz = null;
+const sesionVoz = {
+    activa: false,
+    venceEn: 0,
+    tareasRestantes: 0,
+};
+
+function formatearTiempoRestanteSesion(msRestantes) {
+    const totalSegundos = Math.max(0, Math.floor(msRestantes / 1000));
+    const minutos = Math.floor(totalSegundos / 60);
+    const segundos = totalSegundos % 60;
+    return `${String(minutos).padStart(2, "0")}:${String(segundos).padStart(2, "0")}`;
+}
+
+function actualizarEstadoSesionVoz() {
+    const estadoSesion = document.getElementById("estado-sesion-voz");
+    const btnCerrarSesion = document.getElementById("btn-cerrar-sesion-voz");
+    if (!estadoSesion) return;
+
+    if (!sesionVoz.activa) {
+        estadoSesion.textContent = "🔒 Acceso por voz cerrado.";
+        estadoSesion.className = "estado-clave-voz";
+        if (btnCerrarSesion) btnCerrarSesion.style.display = "none";
+        return;
+    }
+
+    const msRestantes = sesionVoz.venceEn - Date.now();
+    estadoSesion.textContent = `🔓 Sesion abierta: ${sesionVoz.tareasRestantes} tarea(s) o ${formatearTiempoRestanteSesion(msRestantes)}.`;
+    estadoSesion.className = "estado-clave-voz ok";
+    if (btnCerrarSesion) btnCerrarSesion.style.display = "inline-block";
+}
+
+function limpiarTemporizadorSesionVoz() {
+    if (!temporizadorSesionVoz) return;
+    clearInterval(temporizadorSesionVoz);
+    temporizadorSesionVoz = null;
+}
+
+function cerrarSesionVoz(mensaje = "") {
+    sesionVoz.activa = false;
+    sesionVoz.venceEn = 0;
+    sesionVoz.tareasRestantes = 0;
+    limpiarTemporizadorSesionVoz();
+    actualizarEstadoSesionVoz();
+    if (mensaje) mostrarEstadoClave(mensaje, "");
+}
+
+function sesionVozDisponible() {
+    if (!sesionVoz.activa) return false;
+
+    if (Date.now() >= sesionVoz.venceEn) {
+        cerrarSesionVoz("⌛ Se vencio el tiempo de acceso por voz.");
+        return false;
+    }
+
+    if (sesionVoz.tareasRestantes <= 0) {
+        cerrarSesionVoz("🔒 Se completo el limite de 10 tareas autorizadas.");
+        return false;
+    }
+
+    return true;
+}
+
+function iniciarSesionVoz() {
+    sesionVoz.activa = true;
+    sesionVoz.venceEn = Date.now() + DURACION_SESION_VOZ_MS;
+    sesionVoz.tareasRestantes = MAX_TAREAS_SESION_VOZ;
+    limpiarTemporizadorSesionVoz();
+    temporizadorSesionVoz = setInterval(() => {
+        if (!sesionVozDisponible()) {
+            const editor = document.getElementById("contenedor-editor");
+            if (editor) editor.style.display = "none";
+            return;
+        }
+        actualizarEstadoSesionVoz();
+    }, 1000);
+    actualizarEstadoSesionVoz();
+}
+
+function consumirUsoSesionVoz() {
+    if (!sesionVozDisponible()) return;
+    sesionVoz.tareasRestantes -= 1;
+    if (sesionVoz.tareasRestantes <= 0) {
+        cerrarSesionVoz("🔒 Se alcanzo el limite de 10 tareas. Vuelve a autenticar por voz para continuar.");
+        return;
+    }
+    actualizarEstadoSesionVoz();
+}
+
+function cerrarSesionVozUsuario() {
+    cerrarSesionVoz("🔒 Acceso por voz cerrado por vos.");
+    const editor = document.getElementById("contenedor-editor");
+    if (editor) editor.style.display = "none";
+}
 
 // document.getElementById("fecha-seleccionada").onchange = obtenerTareas;
 // 2. Función para GUARDAR en MongoDB
@@ -153,6 +249,7 @@ function abrirContenedorEditor() {
         ? `✅ Acceso autorizado para ${remitenteActual}`
         : "✅ Acceso por voz autorizado";
     mostrarEstadoClave(mensaje, "ok");
+    actualizarEstadoSesionVoz();
 }
 
 function iniciarDesbloqueoPorVoz() {
@@ -163,6 +260,7 @@ function iniciarDesbloqueoPorVoz() {
         const remitente = obtenerRemitenteDesdeFrase(claveFallback);
         if (remitente) {
             remitenteActual = remitente;
+            iniciarSesionVoz();
             abrirContenedorEditor();
         } else {
             mostrarEstadoClave("❌ Clave incorrecta", "error");
@@ -190,8 +288,9 @@ function iniciarDesbloqueoPorVoz() {
             const remitente = obtenerRemitenteDesdeFrase(voz);
             if (remitente) {
                 remitenteActual = remitente;
+                iniciarSesionVoz();
                 abrirContenedorEditor();
-                hablar(`Acceso autorizado, ${remitente}. Puedes crear una nueva tarea.`);
+                hablar(`Acceso autorizado, ${remitente}. Tenes hasta 10 tareas o 30 minutos.`);
                 return;
             }
 
@@ -252,6 +351,10 @@ function hablar(texto) {
 }
 
 function abrirEditorSeguro() {
+    if (sesionVozDisponible()) {
+        abrirContenedorEditor();
+        return;
+    }
     iniciarDesbloqueoPorVoz();
 }
  
@@ -429,6 +532,7 @@ async function guardarTareaManual() {
             // 1. Limpiamos los campos
             document.getElementById("titulo-tarea").value = "";
             document.getElementById("notas-tarea").value = "";
+            consumirUsoSesionVoz();
             // 2. Cerramos el editor azul
             document.getElementById('contenedor-editor').style.display = 'none';
             // 3. Refrescamos la lista de hoy
@@ -450,12 +554,17 @@ window.addEventListener('DOMContentLoaded', () => {
         obtenerTareas();
     }
     actualizarTextoBotonFiltro4Dias();
+    actualizarEstadoSesionVoz();
     // Forzamos ir al menú principal para que no se pisen las pantallas
     mostrarSeccion('menu-principal');
 });
 
 // 2. EDITOR SEGURO: Con verificación de ID
 function abrirEditorSeguro() {
+    if (sesionVozDisponible()) {
+        abrirContenedorEditor();
+        return;
+    }
     iniciarDesbloqueoPorVoz();
 }
 

@@ -55,6 +55,7 @@
         <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
       </div>
       <p id="estado-clave-voz" class="estado-clave-voz"></p>
+      <p id="estado-sesion-voz" class="estado-clave-voz"></p>
 
       <div id="contenedor-editor" class="editor-punteado" style="display: none">
         <input type="text" id="titulo-tarea" placeholder="¿Qué hacemos?">
@@ -62,6 +63,9 @@
         <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
           <button id="btn-voz">🎤 Dictar</button>
           <button onclick="guardarTareaManual()">💾 Guardar</button>
+        </div>
+        <div style="margin-top:10px;">
+          <button id="btn-cerrar-sesion-voz" class="btn-accion" onclick="cerrarSesionVozUsuario()" style="display:none;">🔒 Cerrar acceso por voz</button>
         </div>
       </div>
 
