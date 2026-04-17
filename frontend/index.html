@@ -51,6 +51,7 @@
       <div class="controles-lista">
         <button class="btn-accion" onclick="abrirEditorSeguro()">+ Nueva Tarea</button>
         <button onclick="cargarRutinaRemedios()">💊 Cargar Remedios</button>
+        <button id="btn-filtro-4dias" class="btn-accion" onclick="toggleNoRealizadasUltimos4Dias()">🕓 No realizadas (4 dias): OFF</button>
         <input type="date" id="fecha-seleccionada" onchange="obtenerTareas()" />
       </div>
       <p id="estado-clave-voz" class="estado-clave-voz"></p>

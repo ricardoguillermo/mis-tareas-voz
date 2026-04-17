@@ -54,16 +54,34 @@ app.post("/tareas", async (req, res) => {
   } catch (err) { res.status(500).send(err); }
 });
 
-// RUTA PARA VER TAREAS (Con filtro de fecha)
-// En tu server.js debe estar así:
+// RUTA PARA VER TAREAS (Con filtros opcionales)
 app.get("/tareas", async (req, res) => {
-    const { fecha } = req.query; // <--- Aquí recibe 'fecha'
-    let filtro = {};
+  try {
+    const { fecha, ultimosDias, noRealizadas } = req.query;
+    const filtro = {};
+
     if (fecha) {
-        filtro.fecha_creacion = fecha; // <--- Aquí busca en la base de datos
+      filtro.fecha_creacion = fecha;
+    } else if (ultimosDias) {
+      const dias = Number.parseInt(ultimosDias, 10);
+      if (!Number.isNaN(dias) && dias > 0) {
+        const desde = new Date();
+        desde.setHours(0, 0, 0, 0);
+        desde.setDate(desde.getDate() - (dias - 1));
+        const fechaDesde = desde.toISOString().split("T")[0];
+        filtro.fecha_creacion = { $gte: fechaDesde };
+      }
     }
-    const tareas = await Task.find(filtro);
+
+    if (noRealizadas === "true") {
+      filtro.chequeado = false;
+    }
+
+    const tareas = await Task.find(filtro).sort({ fecha_creacion: -1 });
     res.json(tareas);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 // RUTA PARA ACTUALIZAR EL CHEQUEO

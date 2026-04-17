@@ -490,6 +490,22 @@ textarea {
 }
 .btn-eliminar:active { transform: translateY(2px); }
 
+#btn-filtro-4dias.activo {
+    background-color: #f39c12;
+    color: #fff;
+}
+
+.fecha-tarea {
+    font-size: 0.8rem;
+    color: #5d6d7e;
+}
+
+.mensaje-vacio {
+    color: #5d6d7e;
+    font-style: italic;
+    margin: 10px 0;
+}
+
 .btn-guardar {
     background-color: #27ae60; /* Verde */
     color: white;

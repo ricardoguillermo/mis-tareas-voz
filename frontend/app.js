@@ -316,21 +316,54 @@ function detenerMusica() {
 
 
 
+let modoNoRealizadasUltimos4Dias = false;
+
+function actualizarTextoBotonFiltro4Dias() {
+    const botonFiltro = document.getElementById('btn-filtro-4dias');
+    if (!botonFiltro) return;
+
+    botonFiltro.textContent = modoNoRealizadasUltimos4Dias
+        ? '🕓 No realizadas (4 dias): ON'
+        : '🕓 No realizadas (4 dias): OFF';
+    botonFiltro.classList.toggle('activo', modoNoRealizadasUltimos4Dias);
+}
+
+async function obtenerTareasNoRealizadasUltimos4Dias() {
+    try {
+        const respuesta = await fetch(`${urlBase}?ultimosDias=4&noRealizadas=true`);
+        const tareas = await respuesta.json();
+        actualizarInterfazTareas(tareas);
+    } catch (error) {
+        console.error("Error al cargar tareas no realizadas de los ultimos 4 dias:", error);
+    }
+}
+
 async function obtenerTareas() {
+    if (modoNoRealizadasUltimos4Dias) {
+        await obtenerTareasNoRealizadasUltimos4Dias();
+        return;
+    }
+
     const inputFecha = document.getElementById('fecha-seleccionada');
     if (!inputFecha) return;
 
     const fechaABuscar = inputFecha.value;
 
     try {
-        const respuesta = await fetch(`https://mis-tareas-voz.onrender.com/tareas?fecha=${fechaABuscar}`);
+        const respuesta = await fetch(`${urlBase}?fecha=${encodeURIComponent(fechaABuscar)}`);
         const tareas = await respuesta.json();
         
         // Llamamos a la función que dibuja los checks en pantalla
         actualizarInterfazTareas(tareas);
     } catch (error) {
-        console.error("Error al cargar tareas del día:", error);
+        console.error("Error al cargar tareas del dia:", error);
     }
+}
+
+function toggleNoRealizadasUltimos4Dias() {
+    modoNoRealizadasUltimos4Dias = !modoNoRealizadasUltimos4Dias;
+    actualizarTextoBotonFiltro4Dias();
+    obtenerTareas();
 }
 
 
@@ -416,6 +449,7 @@ window.addEventListener('DOMContentLoaded', () => {
         selector.value = hoy;
         obtenerTareas();
     }
+    actualizarTextoBotonFiltro4Dias();
     // Forzamos ir al menú principal para que no se pisen las pantallas
     mostrarSeccion('menu-principal');
 });
@@ -478,6 +512,13 @@ function actualizarInterfazTareas(tareas) {
     if (contenedorGeneral) contenedorGeneral.innerHTML = "";
     if (contenedorCompras) contenedorCompras.innerHTML = "";
 
+    if (!Array.isArray(tareas) || tareas.length === 0) {
+        if (contenedorGeneral) {
+            contenedorGeneral.innerHTML = '<p class="mensaje-vacio">No hay tareas para mostrar.</p>';
+        }
+        return;
+    }
+
     tareas.forEach(tarea => {
         // Limpiamos el texto para detectar "comprar" o "compra" sin errores
         const texto = tarea.titulo.trim().toLowerCase();
@@ -485,6 +526,9 @@ function actualizarInterfazTareas(tareas) {
         const remitente = tarea.remitente || extraerRemitenteDesdeNotas(tarea.notas) || "?";
         const inicialRemitente = obtenerInicialRemitente(remitente);
         const colorRemitente = obtenerClaseColorRemitente(remitente);
+        const etiquetaFecha = tarea.fecha_creacion
+            ? `<small class="fecha-tarea">${tarea.fecha_creacion}</small>`
+            : "";
 
         const div = document.createElement('div');
         div.className = 'tarea-card';
@@ -495,8 +539,9 @@ function actualizarInterfazTareas(tareas) {
                   <input type="checkbox" ${tarea.chequeado ? 'checked' : ''} 
                          onchange="alternarTarea('${tarea._id}', this.checked)">
                   <span class="${tarea.chequeado ? 'completada' : ''}">
-                      ${esCompra ? '🛒' : '📌'} ${tarea.titulo}
+                                            ${esCompra ? '🛒' : '📌'} ${tarea.titulo}
                   </span>
+                                    ${etiquetaFecha}
                 </div>
                 <div>
                   <button class="btn-eliminar" onclick="eliminarTarea('${tarea._id}')">❌</button>
